@@ -1,0 +1,46 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_circle.c
+stdio.h
+-
+area_of_circle.h
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_circle.h
+
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_circle.h
+
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_rec.c
+stdio.h
+-
+area_of_rec.h
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_rec.h
+
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_rec.h
+
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_triangle.c
+stdio.h
+-
+area_of_triangle.h
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_triangle.h
+
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_triangle.h
+
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/main.c
+stdio.h
+-
+string.h
+-
+stdlib.h
+-
+area_of_rec.h
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_rec.h
+area_of_circle.h
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_circle.h
+area_of_triangle.h
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_triangle.h
+

@@ -1,0 +1,3 @@
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/cmake-build-debug/CMakeFiles/SystemSoftware.dir
