@@ -14,4 +14,8 @@ CMakeFiles/SystemSoftware.dir/Lab1/main.c.o: ../Lab1/area_of_circle.h
 CMakeFiles/SystemSoftware.dir/Lab1/main.c.o: ../Lab1/area_of_rec.h
 CMakeFiles/SystemSoftware.dir/Lab1/main.c.o: ../Lab1/area_of_triangle.h
 CMakeFiles/SystemSoftware.dir/Lab1/main.c.o: ../Lab1/main.c
+CMakeFiles/SystemSoftware.dir/Lab1/main.c.o: ../Lab1/roman_num.h
+
+CMakeFiles/SystemSoftware.dir/Lab1/roman_num.c.o: ../Lab1/roman_num.c
+CMakeFiles/SystemSoftware.dir/Lab1/roman_num.c.o: ../Lab1/roman_num.h
 

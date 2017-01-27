@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/SystemSoftware.dir/Lab1/area_of_rec.c.o"
   "CMakeFiles/SystemSoftware.dir/Lab1/area_of_triangle.c.o"
   "CMakeFiles/SystemSoftware.dir/Lab1/area_of_circle.c.o"
+  "CMakeFiles/SystemSoftware.dir/Lab1/roman_num.c.o"
   "SystemSoftware.pdb"
   "SystemSoftware"
 )

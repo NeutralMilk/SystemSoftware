@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include "area_of_circle.h"
 
-float area_of_cicle(int num1) {
+float area_of_circle(int num1) {
 
     float area;
     int radius = num1;

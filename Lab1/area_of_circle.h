@@ -6,6 +6,6 @@
 #define SYSTEMSOFTWARE_AREA_OF_CIRCLE_H
 
 #define PI 3.14
-float area_of_cicle(int num1);
+float area_of_circle(int num1);
 
 #endif //SYSTEMSOFTWARE_AREA_OF_CIRCLE_H

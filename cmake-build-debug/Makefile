@@ -231,6 +231,33 @@ Lab1/main.c.s:
 	$(MAKE) -f CMakeFiles/SystemSoftware.dir/build.make CMakeFiles/SystemSoftware.dir/Lab1/main.c.s
 .PHONY : Lab1/main.c.s
 
+Lab1/roman_num.o: Lab1/roman_num.c.o
+
+.PHONY : Lab1/roman_num.o
+
+# target to build an object file
+Lab1/roman_num.c.o:
+	$(MAKE) -f CMakeFiles/SystemSoftware.dir/build.make CMakeFiles/SystemSoftware.dir/Lab1/roman_num.c.o
+.PHONY : Lab1/roman_num.c.o
+
+Lab1/roman_num.i: Lab1/roman_num.c.i
+
+.PHONY : Lab1/roman_num.i
+
+# target to preprocess a source file
+Lab1/roman_num.c.i:
+	$(MAKE) -f CMakeFiles/SystemSoftware.dir/build.make CMakeFiles/SystemSoftware.dir/Lab1/roman_num.c.i
+.PHONY : Lab1/roman_num.c.i
+
+Lab1/roman_num.s: Lab1/roman_num.c.s
+
+.PHONY : Lab1/roman_num.s
+
+# target to generate assembly for a file
+Lab1/roman_num.c.s:
+	$(MAKE) -f CMakeFiles/SystemSoftware.dir/build.make CMakeFiles/SystemSoftware.dir/Lab1/roman_num.c.s
+.PHONY : Lab1/roman_num.c.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -252,6 +279,9 @@ help:
 	@echo "... Lab1/main.o"
 	@echo "... Lab1/main.i"
 	@echo "... Lab1/main.s"
+	@echo "... Lab1/roman_num.o"
+	@echo "... Lab1/roman_num.i"
+	@echo "... Lab1/roman_num.s"
 .PHONY : help
 
 

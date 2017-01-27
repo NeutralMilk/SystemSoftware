@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_CHECK_C
   "/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_rec.c" "/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/cmake-build-debug/CMakeFiles/SystemSoftware.dir/Lab1/area_of_rec.c.o"
   "/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/area_of_triangle.c" "/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/cmake-build-debug/CMakeFiles/SystemSoftware.dir/Lab1/area_of_triangle.c.o"
   "/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/main.c" "/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/cmake-build-debug/CMakeFiles/SystemSoftware.dir/Lab1/main.c.o"
+  "/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/Lab1/roman_num.c" "/Users/Timbarnard/Documents/College/4th Year/Semester2/SystemsSoftware/SystemSoftware/cmake-build-debug/CMakeFiles/SystemSoftware.dir/Lab1/roman_num.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 
