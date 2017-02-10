@@ -7,51 +7,24 @@
 
 int main( int argc, char *argv[] )  {
     
-    int link[2];
-    pid_t pid;
-    char foo[4096];
 
-    if (pipe(link)==-1) {
-        exit(27);
-    }
+    if (argc == 1) {
+    
+        char* args[] = {"ps", "aux", NULL};
+        execv("/bin/ps",args); 
 
-    if ((pid = fork()) == -1) {
-        exit(27);
-    }
-
-    if(pid == 0) {
-
-        dup2 (link[1], STDOUT_FILENO);
-        close(link[0]);
-        close(link[1]);
-        execl("/bin/ps", "ps", "aux", (char *)0);
-        exit(27);
-
-    } else {
-
-        close(link[1]);
-        
-        int nbytes = read(link[0], foo, sizeof(foo));
-        
-        if ( argc == 2 ) {
-            printf("Finding... %s\n",argv[1]);
-            
-            execl("/bin/grep", "grep", argv[1], (char *)0);
-            exit(27);
+    } else if (argc == 2 )  {
            
-        } 
-        else if ( argc == 3 ) {
-            printf("Killing... %s\n",argv[1]);
-            
-            execl("/bin/kill", "kill", argv[1], (char *)0);
-            exit(27);
-             
-       } else {
-
-            printf("Output: (%.*s)\n", nbytes, foo);
-            wait(NULL);
-        }
-
+        printf("Finding... %s\n",argv[1]);
+        char* args[] = {"pgrep", argv[1], NULL};    
+        execv("/usr/bin/pgrep", args);
+           
+    } else if (argc == 3) {
+        
+        printf("Killing... %s\n",argv[2]);
+        char* args[] = {"kill", argv[2], NULL};
+        execv("/bin/kill", args);
     }
+    
     return 0;
 }
