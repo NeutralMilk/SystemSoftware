@@ -38,9 +38,15 @@ int main( int argc, char *argv[] )  {
             
             execl("/bin/grep", "grep", argv[1], (char *)0);
             exit(27);
+           
+        } 
+        else if ( argc == 3 ) {
+            printf("Killing... %s\n",argv[1]);
             
-            
-        } else {
+            execl("/bin/kill", "kill", argv[1], (char *)0);
+            exit(27);
+             
+       } else {
 
             printf("Output: (%.*s)\n", nbytes, foo);
             wait(NULL);
