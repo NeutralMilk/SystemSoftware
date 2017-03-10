@@ -18,7 +18,7 @@ $(OBJDIR)/backup.o : backup.c
 	$(CC) -c backup.c -o $(OBJDIR)/backup.o
 
 $(OBJDIR)/timestamp.o : timestamp.c
-	$(CC) -c timestamp.c -o $(OBJDIR)/timestamp.ogit
+	$(CC) -c timestamp.c -o $(OBJDIR)/timestamp.o
 
 $(OBJDIR)/configuration.o : configuration.c
 	$(CC) -c configuration.c -o $(OBJDIR)/configuration.o
