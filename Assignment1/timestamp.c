@@ -1,6 +1,7 @@
 #include "timestamp.h"     
 #include <time.h>
 #include <stdio.h>
+#include "logger.h"
 
 char* string_date(char * buffer_time)
 {
@@ -23,7 +24,9 @@ int getSeconds( char* time_str ) {
     //newyear.tm_hour = 16;
 	//newyear.tm_min = 25;
 	//newyear.tm_sec = 0;
-    if (strptime(time_str, "%H:%M:%S", &newyear) != NULL)
+    if (strptime(time_str, "%H:%M:%S", &newyear) == NULL) {
+        logErrorMessages("parsing time error", time_str);
+    }
 
     printf("hour: %d; minute: %d; second: %d\n",  newyear.tm_hour, newyear.tm_min, newyear.tm_sec);
 
