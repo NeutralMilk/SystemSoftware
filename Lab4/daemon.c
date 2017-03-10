@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
 			newyear.tm_min = 22;
 			newyear.tm_sec = 0;
 				
-			char* c_time_string = ctime(&now);
+			//char* c_time_string = ctime(&now);
 			//printf("Time now: %s", c_time_string);
 				
 			int time_diff = difftime(mktime(&newyear), now);

@@ -11,17 +11,18 @@ int main ()
     struct tm * timeinfo;
     char buffer [80];
 
-    char source_file[255] =  "/Users/timothybarnard/Documents/SystemSoftware/Assignment1/tim.txt";
-    char target_file[255] =  "/Users/timothybarnard/Documents/SystemSoftware/Assignment1/folder/tim.txt";
-
-    char* args[] = {"cp -R", source_file, target_file, NULL};
-    execv("/bin/cp",args); 
-
     time (&rawtime);
     timeinfo = localtime (&rawtime);
 
-    strftime (buffer,80,"%d_%m_%Y",timeinfo);
+    strftime (buffer,80,"%d_%m_%Y/",timeinfo);
     puts (buffer);
+
+    char source_file[255] =  "/Users/timothybarnard/Documents/SystemSoftware/Assignment1/html";
+    char target_file[255] =  "/Users/timothybarnard/Documents/SystemSoftware/Assignment1/folder/";
+    strcat(target_file,buffer);
+
+    char* args[] = {"cp","-R", source_file, target_file, NULL};
+    execv("/bin/cp",args); 
 
     return 0;
 }

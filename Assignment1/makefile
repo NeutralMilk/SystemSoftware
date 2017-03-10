@@ -1,19 +1,29 @@
 CC = gcc
-objects = Logger.o main.o
-cfiles = Logger.c main.c 
-headers = Logger.h
-name = logger
+objects = obj/main.o obj/backup.o obj/timestamp.o obj/configuration.o obj/logger.o
+cfiles =  main.c backup.c timestamp.c configuration.c logger.c
+headers = backup.h timestamp.h configuration.h logger.h
+name = myProg
+OBJDIR = obj
 
-logger : $(objects)
+myProg: $(objects)
 	$(CC) -o $(name) $(objects) -lm
 
-main.o : main.c $(headers)
-	$(CC) -c main.c
+$(OBJDIR)/main.o : main.c $(headers)
+	$(CC) -c main.c -o $(OBJDIR)/main.o
 
-Logger.o : Logger.c
-	$(CC) -c Logger.c
+$(OBJDIR)/logger.o : logger.c $(headers)
+	$(CC) -c logger.c -o $(OBJDIR)/logger.o
 
-debug : $(cfiles)
+$(OBJDIR)/backup.o : backup.c
+	$(CC) -c backup.c -o $(OBJDIR)/backup.o
+
+$(OBJDIR)/timestamp.o : timestamp.c
+	$(CC) -c timestamp.c -o $(OBJDIR)/timestamp.o
+
+$(OBJDIR)/configuration.o : configuration.c
+	$(CC) -c configuration.c -o $(OBJDIR)/configuration.o
+
+debug: $(cfiles)
 	$(CC) -g $(cfiles) -lm -o $(name)
 
 clean:
