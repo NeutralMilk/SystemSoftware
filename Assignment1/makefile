@@ -1,7 +1,7 @@
 CC = gcc
-objects = obj/main.o obj/backup.o obj/timestamp.o obj/configuration.o obj/logger.o
-cfiles =  main.c backup.c timestamp.c configuration.c logger.c
-headers = backup.h timestamp.h configuration.h logger.h
+objects = obj/main.o obj/backup.o obj/timestamp.o obj/configuration.o obj/logger.o obj/permissions.o
+cfiles =  main.c backup.c timestamp.c configuration.c logger.c permissions.c
+headers = backup.h timestamp.h configuration.h logger.h permissions.h
 name = myProg
 OBJDIR = obj
 
@@ -10,6 +10,9 @@ myProg: $(objects)
 
 $(OBJDIR)/main.o : main.c $(headers)
 	$(CC) -c main.c -o $(OBJDIR)/main.o
+
+$(OBJDIR)/permissions.o : permissions.c $(headers)
+	$(CC) -c permissions.c -o $(OBJDIR)/permissions.o
 
 $(OBJDIR)/logger.o : logger.c $(headers)
 	$(CC) -c logger.c -o $(OBJDIR)/logger.o

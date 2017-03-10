@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
                 int seconds_diff = getSeconds(config.backup_time);
                 char str[10];
                 sprintf(str, "%d", seconds_diff);
-                logInfoMessages("seconds until backup %s ",str);
+                logInfoMessages("seconds until backup ",str);
 
 			    sleep(seconds_diff);
                 logInfoMessage("backup starting");

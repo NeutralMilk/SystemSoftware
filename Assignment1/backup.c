@@ -9,9 +9,13 @@
 #include "backup.h"
 #include "timestamp.h"
 #include "logger.h"
+#include "permissions.h"
 
 void backup_folder( char * sourceFile, char * targetFile )
 {   
+    //locking sourceFile
+    lockAllFiles(sourceFile);
+
     char date[50];
     char* time_buff = string_date(date);
     //char source_file[255] =  "/Users/timothybarnard/Documents/SystemSoftware/Assignment1/html";
@@ -21,4 +25,6 @@ void backup_folder( char * sourceFile, char * targetFile )
     char* args[] = {"cp","-R", sourceFile, targetFile, NULL};
     execv("/bin/cp",args); 
     logInfoMessage("backup completed");
+
+    unlockAllFiles(sourceFile);
 }
