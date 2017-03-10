@@ -8,6 +8,7 @@
 
 #include "backup.h"
 #include "timestamp.h"
+#include "logger.h"
 
 void backup_folder( char * sourceFile, char * targetFile )
 {   
@@ -19,4 +20,5 @@ void backup_folder( char * sourceFile, char * targetFile )
 
     char* args[] = {"cp","-R", sourceFile, targetFile, NULL};
     execv("/bin/cp",args); 
+    logInfoMessage("backup completed");
 }

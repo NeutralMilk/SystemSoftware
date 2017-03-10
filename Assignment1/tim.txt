@@ -5,7 +5,7 @@ TBPL 255
 BACKUP 1
 
 #backup time
-BKUP_TIME 18:33:00
+BKUP_TIME 20:10:00
 
 #source directory
 SOURCE /Users/timothybarnard/Documents/SystemSoftware/Assignment1/html

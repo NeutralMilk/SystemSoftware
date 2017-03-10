@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <string.h>
 
 #include "configuration.h"
-
+#include "logger.h"
 // #define MAX_CONFIG_VARIABLE_LEN 20
 // #define CONFIG_LINE_BUFFER_SIZE 100
 // #define MAX_LLIST_NAME_LEN 256
@@ -32,7 +33,7 @@ struct config_struct read_config_file() {
     char config_filename[255] = "/Users/timothybarnard/Documents/SystemSoftware/Assignment1/tim.txt";
 
     if ((fp=fopen(config_filename, "r")) == NULL) {
-        fprintf(stderr, "Failed to open config file %s", config_filename);
+        logErrorMessages("Failed to open config file", config_filename);
         exit(EXIT_FAILURE);
     }
     while(! feof(fp)) {
@@ -57,12 +58,15 @@ struct config_struct read_config_file() {
         if (strstr(buf, "TARGET ")) {
             read_str_from_config_line(buf, config.backup_target);
         }
+    
     }
-    printf("TBPL = %d\n", config.bytes_per_line);
-    printf("BACKUP = %d\n", config.backup_on);
-    printf("BKUP_TIME = %s\n", config.backup_time);
-    printf("SOURCE = %s\n", config.backup_source);
-    printf("TARGET = %s\n", config.backup_target);
+    char str[10];
+    sprintf(str, "%d", config.backup_on);
+
+    logInfoMessages("BACKUP " ,str);
+    logInfoMessages("BKUP_TIME ",  config.backup_time);
+    logInfoMessages("SOURCE ",  config.backup_source);
+    logInfoMessages("TARGET ",  config.backup_source);
 
     fclose(fp);
 

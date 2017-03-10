@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <time.h>
+#include <string.h>
 
 #include "backup.h"
 #include "configuration.h"
@@ -41,6 +42,7 @@ int main(int argc, char *argv[]) {
 	if( pid > 0) {
 		printf("\nMe Parent");
 		sleep(10);
+        logInfoMessage("Parent exited");
 		exit(EXIT_SUCCESS);
 	
 	} else {
@@ -48,13 +50,19 @@ int main(int argc, char *argv[]) {
 		//Step1: Create Orphan
 		
 		//Step2: Set sessionID
-		if(setsid() < 0) { exit(EXIT_FAILURE);}
+		if(setsid() < 0) { 
+            logErrorMessage("set sessionID not working");
+            exit(EXIT_FAILURE);
+        }
 		
 		//Step3: unmask - file priveledges to read and write
 		umask(0);
 		
 		//Step4: Change file directoy
-		if(chdir("/") < 0 ) { exit(EXIT_FAILURE);}
+		if(chdir("/") < 0 ) { 
+            logErrorMessage("not changing file root directoy");
+            exit(EXIT_FAILURE);
+        }
 		
 		//Step5: close file descriptors
 		int x;
@@ -67,6 +75,8 @@ int main(int argc, char *argv[]) {
             struct config_struct config;
             config = read_config_file();
             if (config.backup_on == 1) {
+                logInfoMessages("backup set for ",config.backup_time);
+                
                 int seconds_diff = getSeconds(config.backup_time);
 			
 			    sleep(seconds_diff);
