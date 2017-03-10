@@ -67,7 +67,7 @@ struct config_struct read_config_file() {
     logInfoMessages("BACKUP " ,str);
     logInfoMessages("BKUP_TIME ",  config.backup_time);
     logInfoMessages("SOURCE ",  config.backup_source);
-    logInfoMessages("TARGET ",  config.backup_source);
+    logInfoMessages("TARGET ",  config.backup_target);
 
     fclose(fp);
 

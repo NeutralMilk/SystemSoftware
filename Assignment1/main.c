@@ -78,8 +78,12 @@ int main(int argc, char *argv[]) {
                 logInfoMessages("backup set for ",config.backup_time);
                 
                 int seconds_diff = getSeconds(config.backup_time);
-			
+                char str[10];
+                sprintf(str, "%d", seconds_diff);
+                logInfoMessages("seconds until backup %s ",str);
+
 			    sleep(seconds_diff);
+                logInfoMessage("backup starting");
 			    backup_folder(config.backup_source, config.backup_target );
             }
 		}
