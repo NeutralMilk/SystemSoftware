@@ -28,7 +28,7 @@ int getSeconds( char* time_str ) {
         logErrorMessages("parsing time error", time_str);
     }
 
-    printf("hour: %d; minute: %d; second: %d\n",  newyear.tm_hour, newyear.tm_min, newyear.tm_sec);
+    //printf("hour: %d; minute: %d; second: %d\n",  newyear.tm_hour, newyear.tm_min, newyear.tm_sec);
 
     int time_diff = difftime(mktime(&newyear), now);
 
