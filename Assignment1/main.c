@@ -85,6 +85,11 @@ int main(int argc, char *argv[]) {
 			    sleep(seconds_diff);
                 logInfoMessage("backup starting");
 			    backup_folder(config.backup_source, config.backup_target );
+
+                logInfoMessage("updating live starting");
+                update_folder(config.backup_source, config.live_site);
+                
+                logInfoMessage("updating and backing completed");
             }
 		}
 	}

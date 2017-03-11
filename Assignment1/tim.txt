@@ -12,3 +12,6 @@ SOURCE /Users/timothybarnard/Documents/SystemSoftware/Assignment1/html
 
 #target directory
 TARGET /Users/timothybarnard/Documents/SystemSoftware/Assignment1/folder/
+
+#live site
+LIVE /Users/timothybarnard/Documents/SystemSoftware/Assignment1/folder/www

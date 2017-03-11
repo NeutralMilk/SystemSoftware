@@ -59,7 +59,10 @@ struct config_struct read_config_file() {
         if (strstr(buf, "TARGET ")) {
             read_str_from_config_line(buf, config.backup_target);
         }
-    
+
+         if (strstr(buf, "LIVE ")) {
+            read_str_from_config_line(buf, config.live_site);
+        }
     }
     char str[10];
     sprintf(str, "%d", config.backup_on);
@@ -68,6 +71,7 @@ struct config_struct read_config_file() {
     logInfoMessages("BKUP_TIME ",  config.backup_time);
     logInfoMessages("SOURCE ",  config.backup_source);
     logInfoMessages("TARGET ",  config.backup_target);
+    logInfoMessages("LIVE SITE ",  config.live_site);
 
     fclose(fp);
 

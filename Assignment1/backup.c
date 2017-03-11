@@ -28,3 +28,15 @@ void backup_folder( char * sourceFile, char * targetFile )
 
     unlockAllFiles(sourceFile);
 }
+
+void update_folder( char * sourceFile, char * targetFile )
+{   
+    //locking sourceFile
+    lockAllFiles(targetFile);
+
+    char* args[] = {"cp","-R", sourceFile, targetFile, NULL};
+    execv("/bin/cp",args); 
+    logInfoMessage("backup completed");
+
+    unlockAllFiles(targetFile);
+}

@@ -10,6 +10,7 @@ struct config_struct {
     char backup_time[256];
     char backup_source[256];
     char backup_target[256];
+    char live_site[256];
 };
 
 // #define MAX_CONFIG_VARIABLE_LEN 20
