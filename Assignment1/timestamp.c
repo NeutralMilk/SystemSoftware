@@ -3,6 +3,19 @@
 #include <stdio.h>
 #include "logger.h"
 
+char* string_date_time(char * buffer_time)
+{
+    time_t rawtime;
+    struct tm * timeinfo;
+
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+
+    strftime(buffer, 30, "[%Y-%m-%d %H:%M:%S]", timeinfo);
+
+    return buffer_time;
+}
+
 char* string_date(char * buffer_time)
 {
     time_t rawtime;

@@ -5,6 +5,7 @@
 #ifndef ASSIGNMENT1_TIMESTAMP_H
 #define ASSIGNMENT1_TIMESTAMP_H
 
+char* string_date_time(char * buffer_time);
 char* string_date();
 int getSeconds( char* time_str );
 
