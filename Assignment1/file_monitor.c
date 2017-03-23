@@ -14,8 +14,11 @@
 
 #include "logger.h"
 
-#define EVENT_SIZE (sizeof (struct inotify_event))
-#define EVENT_BUF_LEN (1024 * (EVENT_SIZE + 16))
+#define MAX_LEN 1024 /*Path length for a directory*/
+#define MAX_EVENTS 1024 /*Max. number of events to process at one go*/
+#define LEN_NAME 16 /*Assuming that the length of the filename won't exceed 16 bytes*/
+#define EVENT_SIZE  ( sizeof (struct inotify_event) ) /*size of one event*/
+#define BUF_LEN     ( MAX_EVENTS * ( EVENT_SIZE + LEN_NAME )) /*buffer to store the data of events*/
 
 void add_watches(int fd, char *root)
 {
@@ -35,11 +38,11 @@ void add_watches(int fd, char *root)
   wd = inotify_add_watch(fd, root, IN_CREATE | IN_MODIFY | IN_DELETE);
   if (wd == -1)
     {
-      fprintf(fp_log,"Couldn't add watch to %s\n",root);
+      //fprintf(fp_log,"Couldn't add watch to %s\n",root);
     }
   else
     {
-      printf("Watching:: %s\n",root);
+      //printf("Watching:: %s\n",root);
     }
  
   /* Add watches to the Level 1 sub-dirs*/
@@ -54,9 +57,9 @@ void add_watches(int fd, char *root)
            
           wd = inotify_add_watch(fd, abs_dir, IN_CREATE | IN_MODIFY | IN_DELETE);
           if (wd == -1)
-              printf("Couldn't add watch to the directory %s\n",abs_dir);
+             // printf("Couldn't add watch to the directory %s\n",abs_dir);
           else
-            printf("Watching:: %s\n",abs_dir);
+            //printf("Watching:: %s\n",abs_dir);
         }
     }
    
