@@ -7,6 +7,10 @@
 #include <unistd.h>
 #include <string.h>
 
+#include <fcntl.h>
+#include <sys/stat.h>
+#include <errno.h>
+
 #include "timestamp.h"
 #include "logger.h"
 #include <syslog.h>
@@ -74,7 +78,7 @@ void log_data_two( FILE *fp ,char * message, char * message1) {
             (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
         //break;
     }
-    ret = fflush(log_stream);
+    ret = fflush(fp);
     if (ret != 0) {
         syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
             (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
@@ -101,7 +105,7 @@ void log_data( FILE *fp,char * message) {
             (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
         //break;
     }
-    ret = fflush(log_stream);
+    ret = fflush(fp);
     if (ret != 0) {
         syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
             (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
