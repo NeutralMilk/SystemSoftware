@@ -72,7 +72,7 @@ static void skeleton_daemon() {
 	openlog ("firstdaemon", LOG_PID, LOG_DAEMON);
 }
 
-void log_data_two( File * file ,char * message, char * message1) {
+void log_data_two( FILE *fp ,char * message, char * message1) {
 
     char str_message[200];
     char date[50];
@@ -83,10 +83,10 @@ void log_data_two( File * file ,char * message, char * message1) {
     strcat(str_message,message);
     strcat(str_message,message1);
 
-    fprintf(file, str_message);
+    fprintf(fp, str_message);
 }
 
-void log_data( File * file ,char * message) {
+void log_data( FILE *fp,char * message) {
 
     char str_message[200];
     char date[50];
@@ -96,7 +96,7 @@ void log_data( File * file ,char * message) {
     strcat(str_message,time_buff);
     strcat(str_message,message);
 
-    fprintf(file, str_message);
+    fprintf(fp, str_message);
 }
 
 int main(int argc, char *argv[]) {
@@ -304,7 +304,7 @@ int main(int argc, char *argv[]) {
 
     log_data(f, "**********");
 
-    fclose(fp);
+    fclose(f);
 	return EXIT_SUCCESS;
 	
 }
