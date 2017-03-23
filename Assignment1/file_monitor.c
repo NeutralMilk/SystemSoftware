@@ -36,14 +36,14 @@ void add_watches(int fd, char *root)
  
   /* add watch to starting directory */
   wd = inotify_add_watch(fd, root, IN_CREATE | IN_MODIFY | IN_DELETE);
-  if (wd == -1)
-    {
-      //fprintf(fp_log,"Couldn't add watch to %s\n",root);
-    }
-  else
-    {
-      //printf("Watching:: %s\n",root);
-    }
+//   if (wd == -1)
+//     {
+//       //fprintf(fp_log,"Couldn't add watch to %s\n",root);
+//     }
+//   else
+//     {
+//       //printf("Watching:: %s\n",root);
+//     }
  
   /* Add watches to the Level 1 sub-dirs*/
   abs_dir = (char *)malloc(MAX_LEN);
@@ -56,10 +56,10 @@ void add_watches(int fd, char *root)
           strcat(abs_dir,entry->d_name);
            
           wd = inotify_add_watch(fd, abs_dir, IN_CREATE | IN_MODIFY | IN_DELETE);
-          if (wd == -1)
-             // printf("Couldn't add watch to the directory %s\n",abs_dir);
-          else
-            //printf("Watching:: %s\n",abs_dir);
+        //   if (wd == -1)
+        //      // printf("Couldn't add watch to the directory %s\n",abs_dir);
+        //   else
+        //     printf("Watching:: %s\n",abs_dir);
         }
     }
    

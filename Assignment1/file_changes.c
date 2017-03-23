@@ -14,10 +14,8 @@
 #define LEN_NAME 16 /*Assuming that the length of the filename won't exceed 16 bytes*/
 #define EVENT_SIZE  ( sizeof (struct inotify_event) ) /*size of one event*/
 #define BUF_LEN     ( MAX_EVENTS * ( EVENT_SIZE + LEN_NAME )) /*buffer to store the data of events*/
- 
- 
-/* Log file*/
-FILE *fp_log;
+#define EVENT_BUF_LEN (1024 * (EVENT_SIZE + 16))
+
 
 static void skeleton_daemon() {
 	pid_t pid;
