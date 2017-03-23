@@ -122,6 +122,8 @@ int main(int argc, char *argv[]) {
 
     DIR *dir;
     struct dirent *entry;
+    int level = 0;
+    char name[30] = "/root/html";
 
     if (!(dir = opendir("/root/html" )))
         return;
