@@ -37,6 +37,7 @@ struct config_struct read_config_file() {
         logErrorMessages("Failed to open config file", config_filename);
         exit(EXIT_FAILURE);
     }
+    
     while(! feof(fp)) {
         fgets(buf, 100, fp);
         if (buf[0] == '#' || strlen(buf) < 4) {

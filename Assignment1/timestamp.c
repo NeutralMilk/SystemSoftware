@@ -16,6 +16,19 @@ char* string_date_time(char * buffer_time)
     return buffer_time;
 }
 
+char* str_date_log(char * buffer_time)
+{
+    time_t rawtime;
+    struct tm * timeinfo;
+
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+
+    strftime(buffer_time, 30, "log_%Y-%m-%d", timeinfo);
+
+    return buffer_time;
+}
+
 char* string_date(char * buffer_time)
 {
     time_t rawtime;

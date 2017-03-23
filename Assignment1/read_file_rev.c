@@ -56,7 +56,7 @@ void readfileinreverse(FILE *fp)
         char buf[100];
         strcat(buf,line[counter]);
 
-        if (strstr(buff, "2017-03-23")) {
+        if (strstr(buf, "2017-03-23")) {
 
             printf("%s\n",line);
         }

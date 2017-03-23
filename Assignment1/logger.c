@@ -75,10 +75,16 @@ void write_log_file( char* log_message ) {
 
     FILE *log_file = NULL;
 	int ret = -1;
-    char log_file_name[50] = "/root/logs/files.log";
-    char str_message[300];
+
+    char log_file_name[50] = "/root/logs/";
+    char log_date[50];    
+    char* log_date_buff = str_date_log(log_date);
+    strcat(log_file_name,log_date_buff);
+    strcat(log_file_name,".log");
+
     char date[50];
     char* time_buff = string_date_time(date);
+    char str_message[300];
 
 	if (log_file_name == NULL) {
         syslog(LOG_ERR, "Log file string empty");
@@ -110,37 +116,47 @@ void write_log_file( char* log_message ) {
     fclose(log_file);
 }
 
-void read_str_from_logs_line(char* config_line, char* val) {    
-    sscanf(config_line, "%s\n", val);
+void read_str_from_log(char* config_line, char* val) {    
+	char prm_name[20];
+	char prm_name1[20];
+	char prm_name2[20];
+	char prm_name3[20];
+	sscanf(config_line, " %s %s %s %s %s\n", prm_name, prm_name1, prm_name2, val);
 }
+
 
 char **get_list_of_files( char **files ) {
 
-    char **to_be_returned[100][50];
+    char **to_be_returned[1000][50];
   
     FILE *fp;
     char buf[100];
-    char log_file_name[50] = "/root/logs/files.log";
+    
+    char log_file_name[50] = "/root/logs/";
+    char log_date[50];    
+    char* log_date_buff = str_date_log(log_date);
+    strcat(log_file_name,log_date_buff);
+    strcat(log_file_name,".log");
 
     if ((fp=fopen(log_file_name, "r")) == NULL) {
         logErrorMessages("Failed to open config file", log_file_name);
         //exit(EXIT_FAILURE);
     }
+
+    int i = 0;
     while(! feof(fp)) {
-        fgets(buf, 100, fp);
-        
-        if (strstr(buf, "TBPL ")) {
-            read_str_from_config_line(buf, config.backup_time);
-        }
-    }
+		fgets(buf, 100, fp);
+		
+		if (strstr(buf, "MODIFIED")) {
+			char tester[50];
+			read_str_from_log(buf, tester);
+
+			to_be_returned[i] = tester;
+            i++;
+		}
+	}
 
     fclose(fp);
 
-    int i = 0;
-    while(*strings) {
-        to_be_returned[i] = malloc( sizeof(char) * strlen( *strings ) );
-        strcpy( to_be_returned[i++], *strings);
-        strings++;
-    }
     return to_be_returned;
 }
