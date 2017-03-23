@@ -142,13 +142,13 @@ int main(int argc, char *argv[]) {
 		if (ret < 0) {
 			syslog(LOG_ERR, "Can not write to log stream: %s, error: %s",
 				(log_stream == stdout) ? "stdout" : log_file_name, strerror(errno));
-			break;
+			//break;
 		}
 		ret = fflush(log_stream);
 		if (ret != 0) {
 			syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
 				(log_stream == stdout) ? "stdout" : log_file_name, strerror(errno));
-			break;
+			//break;
 		}
         
 	    /*read to determine the event change happens on directory. Actually this read blocks until the change event occurs*/
