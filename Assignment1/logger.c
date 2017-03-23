@@ -181,9 +181,12 @@ void write_watch_file( char* directory_name, int watcher ) {
 				watch_file_name, strerror(errno));
 	}	
 
+    char str[10];
+    sprintf(str, "%d", watcher);
+
     strcat(str_message,directory_name);
     strcat(str_message, ":");
-    strcat(str_message,watcher);
+    strcat(str_message,str);
 
     ret = fprintf(watch_file, "%s", str_message);
 
@@ -191,7 +194,7 @@ void write_watch_file( char* directory_name, int watcher ) {
         syslog(LOG_ERR, "Can not write to log stream: %s, error: %s",
             (watch_file == stdout) ? "stdout" : "daemon1", strerror(errno));
     }
-    ret = fflush(log_file);
+    ret = fflush(watch_file);
     if (ret != 0) {
         syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
             (watch_file == stdout) ? "stdout" : "daemon1", strerror(errno));

@@ -95,7 +95,7 @@ void listdir(const char *name, int level, int notif)
             if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
                 continue;
             //printf("%*s[%s]\n", level*2, "", entry->d_name);
-            int wd = inotify_add_watch( notif, entry->d_name, IN_CREATE | IN_DELETE );
+            int wd = inotify_add_watch( notif, entry->d_name, IN_CREATE | IN_DELETE | IN_MODIFY );
             write_watch_file(entry->d_name, wd);
             listdir(path, level + 1, notif);
         }
@@ -120,12 +120,12 @@ int main(int argc, char *argv[]) {
 
 	while (1)
 	{  		
-        listdir(".", 0, fd);
+        listdir("/root/html", 0, fd);
 		sleep (20);
 	}
 
 	/*removing the directory from the watch list.*/
-	inotify_rm_watch( fd, wd );
+	//inotify_rm_watch( fd, wd );
 	
 	return EXIT_SUCCESS;
 }
