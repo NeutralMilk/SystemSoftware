@@ -14,6 +14,6 @@ void logWarningMessages( char* message1, char* message2 );
 void logInfoMessages( char* message1, char* message2 );
 
 void log_data_two( FILE *fp ,char * message, char * message1);
-void log_data_two( FILE *fp ,char * message);
+void log_data( FILE *fp ,char * message);
 
 #endif //ASSIGNMENT1_LOGGER_H
