@@ -29,7 +29,6 @@ void logInfoMessages( char* message1, char* message2 )
    closelog();
 }
 
-
 void logWarningMessage( char* message )
 {
    openlog("dt228Yr4",LOG_PID|LOG_CONS, LOG_USER);
@@ -65,7 +64,7 @@ void log_data_two( char * message, char * message1) {
     strcat(str_message,message);
     strcat(str_message,message1);
 
-   write_log_file(str_message);
+    write_log_file(str_message);
 }
 
 void log_data( char * message) {
@@ -109,4 +108,39 @@ void write_log_file( char* log_message ) {
     }
 
     fclose(log_file);
+}
+
+void read_str_from_logs_line(char* config_line, char* val) {    
+    sscanf(config_line, "%s\n", val);
+}
+
+char **get_list_of_files( char **files ) {
+
+    char **to_be_returned[100][50];
+  
+    FILE *fp;
+    char buf[100];
+    char log_file_name[50] = "/root/logs/files.log";
+
+    if ((fp=fopen(log_file_name, "r")) == NULL) {
+        logErrorMessages("Failed to open config file", log_file_name);
+        //exit(EXIT_FAILURE);
+    }
+    while(! feof(fp)) {
+        fgets(buf, 100, fp);
+        
+        if (strstr(buf, "TBPL ")) {
+            read_str_from_config_line(buf, config.backup_time);
+        }
+    }
+
+    fclose(fp);
+
+    int i = 0;
+    while(*strings) {
+        to_be_returned[i] = malloc( sizeof(char) * strlen( *strings ) );
+        strcpy( to_be_returned[i++], *strings);
+        strings++;
+    }
+    return to_be_returned;
 }

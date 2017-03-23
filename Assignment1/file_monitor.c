@@ -120,11 +120,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	while (1)
-	{  
-        /* Debug print */
-		
-        log_data("**********");
-		
+	{  		
 	    /*read to determine the event change happens on directory. Actually this read blocks until the change event occurs*/
 	    syslog (LOG_NOTICE, "BEFORE READ IN BUFFER");
 		length = read( fd, buffer, EVENT_BUF_LEN );
@@ -272,8 +268,6 @@ int main(int argc, char *argv[]) {
 		i=0;    
 	    syslog (LOG_NOTICE, "~~~~~~one testing daemon ended.~~~~~~~~~~");
 		sleep (20);
-
-        log_data("**********");
 	}
 
 	/*removing the directory from the watch list.*/
