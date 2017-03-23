@@ -100,12 +100,12 @@ void write_log_file( char* log_message ) {
 
     if (ret < 0) {
         syslog(LOG_ERR, "Can not write to log stream: %s, error: %s",
-            (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
+            (log_file == stdout) ? "stdout" : "daemon1", strerror(errno));
     }
     ret = fflush(log_file);
     if (ret != 0) {
         syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
-            (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
+            (log_file == stdout) ? "stdout" : "daemon1", strerror(errno));
     }
 
     fclose(log_file);
