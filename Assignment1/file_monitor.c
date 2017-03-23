@@ -120,32 +120,32 @@ int main(int argc, char *argv[]) {
 	    perror("inotify_add_watch");    
 	}
 
-    // DIR *dir;
-    // struct dirent *entry;
-    // int level = 0;
-    // char name[30] = "/root/html";
+    DIR *dir;
+    struct dirent *entry;
+    int level = 0;
+    char name[30] = "/root/html";
 
-    // if (!(dir = opendir("/root/html" )))
-    //     return;
-    // if (!(entry = readdir(dir)))
-    //     return;
+    if (!(dir = opendir("/root/html" )))
+        return;
+    if (!(entry = readdir(dir)))
+        return;
 
-    // do {
-    //     if (entry->d_type == DT_DIR) {
-    //         char path[1024];
-    //         int len = snprintf(path, sizeof(path)-1, "%s/%s", name, entry->d_name);
-    //         path[len] = 0;
-    //         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
-    //             continue;
-    //         //printf("%*s[%s]\n", level*2, "", entry->d_name);
-    //         listdir(path, level + 1);
-    //     }
-    //     else {
-    //         wd = inotify_add_watch( fd,  entry->d_name    , IN_ALL_EVENTS );
-    //         //printf("%*s- %s\n", level*2, "", entry->d_name);
-    //     }
-    // } while (entry = readdir(dir));
-    // closedir(dir);
+    do {
+        if (entry->d_type == DT_DIR) {
+            char path[1024];
+            int len = snprintf(path, sizeof(path)-1, "%s/%s", name, entry->d_name);
+            path[len] = 0;
+            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+                continue;
+            //printf("%*s[%s]\n", level*2, "", entry->d_name);
+            listdir(path, level + 1);
+        }
+        else {
+            wd = inotify_add_watch( fd,  entry->d_name    , IN_ALL_EVENTS );
+            //printf("%*s- %s\n", level*2, "", entry->d_name);
+        }
+    } while (entry = readdir(dir));
+    closedir(dir);
 
 	while (1)
 	{  		
@@ -171,6 +171,7 @@ int main(int argc, char *argv[]) {
 		if (event->mask & IN_IGNORED) {
 				inotify_rm_watch(fd,wd);
 				inotify_add_watch(fd,"/root/html", IN_ALL_EVENTS );
+                inotify_add_watch(fd,"/root/html/html", IN_ALL_EVENTS );
 			}       
 
 		if ( event->mask & IN_ATTRIB ) {
