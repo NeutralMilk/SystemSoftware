@@ -130,15 +130,15 @@ void write_log_file( char* log_message ) {
     fclose(log_file);
 }
 
-
 void read_str_from_log(char* config_line, char* val) {    
 	char prm_name[20];
 	char prm_name1[20];
 	char prm_name2[20];
 	char prm_name3[20];
-	sscanf(config_line, " %s %s %s %s %s\n", prm_name, prm_name1, prm_name2,  prm_name3, val);
+    char prm_name4[20];
+	sscanf(config_line, " %s %s %s %s %s %s\n", prm_name, prm_name1, 
+                prm_name2, prm_name3, prm_name4, val);
 }
-
 
 void get_list_of_files() {
 
