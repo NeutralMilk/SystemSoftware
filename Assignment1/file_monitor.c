@@ -307,9 +307,11 @@ int main(int argc, char *argv[]) {
 
 	/*removing the directory from the watch list.*/
 	inotify_rm_watch( fd, wd );
-
-	/*closing the INOTIFY instance*/
-	close( fd );
+	
+    /* Close log file, when it is used. */
+	if (log_stream != stdout) {
+		fclose(log_stream);
+	}
 
 	syslog (LOG_NOTICE, "--------------- first testing daemon terminated.----------------");
 	closelog();

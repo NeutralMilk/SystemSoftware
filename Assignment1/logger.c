@@ -64,9 +64,10 @@ void log_data_two( FILE *fp ,char * message, char * message1) {
     strcat(str_message,time_buff);
     strcat(str_message,message);
     strcat(str_message,message1);
-
+    strcat(str_message, "\n");
+    
     fprintf(fp, "%s", str_message);
-    fprintf(fp, "\n");
+    
 }
 
 void log_data( FILE *fp,char * message) {
@@ -78,7 +79,7 @@ void log_data( FILE *fp,char * message) {
 
     strcat(str_message,time_buff);
     strcat(str_message,message);
+    strcat(str_message, "\n");
 
     fprintf(fp, "%s", str_message);
-    fprintf(fp, "\n");
 }
