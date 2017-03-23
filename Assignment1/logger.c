@@ -7,6 +7,7 @@
 #include <unistd.h>
 #include <string.h>
 
+#include "timestamp.h"
 #include "logger.h"
 #include <syslog.h>
 
