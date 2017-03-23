@@ -132,6 +132,7 @@ int main(int argc, char *argv[]) {
 
 	    syslog (LOG_NOTICE, "~~~~~~~ One new testing daemon started.~~~~~~~~~");    
         log_data(f, "**********");
+        fprintf(f, "testing 123");
 	    /*read to determine the event change happens on directory. Actually this read blocks until the change event occurs*/
 	    syslog (LOG_NOTICE, "BEFORE READ IN BUFFER");
 		length = read( fd, buffer, EVENT_BUF_LEN );
