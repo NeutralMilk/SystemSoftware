@@ -13,8 +13,6 @@
 
 #include "logger.h"
 
-
-
 #define EVENT_SIZE (sizeof (struct inotify_event))
 #define EVENT_BUF_LEN (1024 * (EVENT_SIZE + 16))
 
@@ -126,10 +124,8 @@ int main(int argc, char *argv[]) {
 
 	while (1)
 	{
-		//TODO: Insert daemon code here.
-
         FILE *f;
-        f = fopen("/root/logs/x.log", "a+"); 
+        f = fopen("/root/logs/files.log", "a+"); 
         if (f == NULL) { 
             logErrorMessage("error opening file: /root/logs/x.log");
         }
