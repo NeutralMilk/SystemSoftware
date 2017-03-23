@@ -119,6 +119,34 @@ int main(int argc, char *argv[]) {
 	    perror("inotify_add_watch");    
 	}
 
+    DIR* srcdir = opendir("/root/html");
+
+    if (srcdir == NULL)
+    {
+        perror("opendir");
+        return -1;
+    }
+
+    while((dent = readdir(srcdir)) != NULL)
+    {
+        struct stat st;
+
+        if(strcmp(dent->d_name, ".") == 0 || strcmp(dent->d_name, "..") == 0)
+            continue;
+
+        if (fstatat(dirfd(srcdir), dent->d_name, &st, 0) < 0)
+        {
+            perror(dent->d_name);
+            continue;
+        }
+
+        if (S_ISDIR(st.st_mode)) {
+            wd = inotify_add_watch( fd,  dent->d_name    , IN_ALL_EVENTS );
+        }
+    }
+    closedir(srcdir);
+    
+
 	while (1)
 	{  		
 	    /*read to determine the event change happens on directory. Actually this read blocks until the change event occurs*/
