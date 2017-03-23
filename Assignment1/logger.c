@@ -187,6 +187,7 @@ void write_watch_file( char* directory_name, int watcher ) {
     strcat(str_message,directory_name);
     strcat(str_message, ":");
     strcat(str_message,str);
+    strcat(str_message,"\n");
 
     ret = fprintf(watch_file, "%s", str_message);
 

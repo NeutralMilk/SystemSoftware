@@ -72,9 +72,6 @@ static void skeleton_daemon() {
 	{
 		close (x);
 	}
-
-	/* Open the log file */
-	openlog ("firstdaemon", LOG_PID, LOG_DAEMON);
 }
 
 void listdir(const char *name, int level, int notif)
@@ -110,10 +107,8 @@ int main(int argc, char *argv[]) {
 
 	skeleton_daemon();
 
-	/*creating the INOTIFY instance*/
 	fd = inotify_init();
 
-	/*checking for error*/
 	if ( fd < 0 ) {
 	  perror( "inotify_init" );
 	}
