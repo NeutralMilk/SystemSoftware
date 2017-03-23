@@ -6,8 +6,11 @@
 #include <sys/stat.h>
 #include <syslog.h>
 #include <errno.h>
+#include <string.h>
+
 #include <linux/inotify.h>
 #include "timestamp.h"
+
 
 #define EVENT_SIZE (sizeof (struct inotify_event))
 #define EVENT_BUF_LEN (1024 * (EVENT_SIZE + 16))
@@ -83,7 +86,7 @@ void log_data_two( FILE *fp ,char * message, char * message1) {
     strcat(str_message,message);
     strcat(str_message,message1);
 
-    fprintf(fp, str_message);
+    fprintf(fp, "%s", str_message);
 }
 
 void log_data( FILE *fp,char * message) {
@@ -96,7 +99,7 @@ void log_data( FILE *fp,char * message) {
     strcat(str_message,time_buff);
     strcat(str_message,message);
 
-    fprintf(fp, str_message);
+    fprintf(fp, "%s", str_message);
 }
 
 int main(int argc, char *argv[]) {
