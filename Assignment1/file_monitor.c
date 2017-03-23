@@ -120,34 +120,30 @@ int main(int argc, char *argv[]) {
 	    perror("inotify_add_watch");    
 	}
 
-    DIR* srcdir = opendir("/root/html");
-    struct dirent* dent;
+    DIR *dir;
+    struct dirent *entry;
 
-    if (srcdir == NULL)
-    {
-        perror("opendir");
-        return -1;
-    }
+    if (!(dir = opendir("/root/html" )))
+        return;
+    if (!(entry = readdir(dir)))
+        return;
 
-    while((dent = readdir(srcdir)) != NULL)
-    {
-        struct stat st;
-
-        if(strcmp(dent->d_name, ".") == 0 || strcmp(dent->d_name, "..") == 0)
-            continue;
-
-        if (fstatat(dirfd(srcdir), dent->d_name, &st, 0) < 0)
-        {
-            perror(dent->d_name);
-            continue;
+    do {
+        if (entry->d_type == DT_DIR) {
+            char path[1024];
+            int len = snprintf(path, sizeof(path)-1, "%s/%s", name, entry->d_name);
+            path[len] = 0;
+            if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+                continue;
+            //printf("%*s[%s]\n", level*2, "", entry->d_name);
+            listdir(path, level + 1);
         }
-
-        if (S_ISDIR(st.st_mode)) {
-            wd = inotify_add_watch( fd,  dent->d_name    , IN_ALL_EVENTS );
+        else {
+            wd = inotify_add_watch( fd,  entry->d_name    , IN_ALL_EVENTS );
+            //printf("%*s- %s\n", level*2, "", entry->d_name);
         }
-    }
-    closedir(srcdir);
-    
+    } while (entry = readdir(dir));
+    closedir(dir);
 
 	while (1)
 	{  		
