@@ -121,7 +121,7 @@ void read_str_from_log(char* config_line, char* val) {
 	char prm_name1[20];
 	char prm_name2[20];
 	char prm_name3[20];
-	sscanf(config_line, " %s %s %s %s %s\n", prm_name, prm_name1, prm_name2, val);
+	sscanf(config_line, " %s %s %s %s %s\n", prm_name, prm_name1, prm_name2,  prm_name3, val);
 }
 
 
@@ -151,7 +151,7 @@ char **get_list_of_files( char **files ) {
 			char tester[50];
 			read_str_from_log(buf, tester);
 
-			to_be_returned[i] = tester;
+			//to_be_returned[i] = tester;
             i++;
 		}
 	}
