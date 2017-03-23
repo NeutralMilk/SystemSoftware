@@ -8,6 +8,7 @@
 #include <errno.h>
 #include <string.h>
 #include <time.h>
+#include <dirent.h>
 
 #include <linux/inotify.h>
 
@@ -120,6 +121,7 @@ int main(int argc, char *argv[]) {
 	}
 
     DIR* srcdir = opendir("/root/html");
+    struct dirent* dent;
 
     if (srcdir == NULL)
     {
