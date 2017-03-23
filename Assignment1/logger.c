@@ -161,3 +161,41 @@ void get_list_of_files() {
 
     //return to_be_returned;
 }
+
+void write_watch_file( char* directory_name, int watcher ) {
+
+    FILE *watch_file = NULL;
+	int ret = -1;
+
+    char watch_file_name[50] = "/root/logs/watcher.txt";
+    char str_message[300];    
+
+	if (watch_file_name == NULL) {
+        syslog(LOG_ERR, "watch file string empty");
+    }
+
+	watch_file = fopen(watch_file_name, "a+");
+
+	if (watch_file == NULL) {
+		syslog(LOG_ERR, "Can not open log file: %s, error: %s",
+				watch_file_name, strerror(errno));
+	}	
+
+    strcat(str_message,directory_name);
+    strcat(str_message, ":");
+    strcat(str_message,watcher);
+
+    ret = fprintf(watch_file, "%s", str_message);
+
+    if (ret < 0) {
+        syslog(LOG_ERR, "Can not write to log stream: %s, error: %s",
+            (watch_file == stdout) ? "stdout" : "daemon1", strerror(errno));
+    }
+    ret = fflush(log_file);
+    if (ret != 0) {
+        syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
+            (watch_file == stdout) ? "stdout" : "daemon1", strerror(errno));
+    }
+
+    fclose(watch_file);
+}
