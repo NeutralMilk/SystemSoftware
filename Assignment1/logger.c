@@ -59,14 +59,13 @@ void logErrorMessages( char* message1, char* message2 )
 
 char *getUserName()
 {
-  uid_t uid = geteuid();
-  struct passwd *pw = getpwuid(uid);
-  if (pw)
-  {
-    return pw->pw_name;
-  }
-
-  return "";
+    char *p=getenv("USER");
+    if(p==NULL)  {
+        return "";
+    } else {
+        return p;
+    }
+   // printf("%s\n",p);
 }
 
 void log_data_two( char * message, char * message1) 
