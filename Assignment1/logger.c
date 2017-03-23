@@ -58,57 +58,57 @@ void logErrorMessages( char* message1, char* message2 )
    closelog();
 }
 
-void log_data_two( FILE *fp ,char * message, char * message1) {
+void log_data_two( char * message, char * message1) {
 
+    char str_message[300];
+
+    strcat(str_message,message);
+    strcat(str_message,message1);
+
+   write_log_file(str_message);
+}
+
+void log_data( char * message) {
+    write_log_file(message);
+}
+
+void write_log_file( char* log_message ) {
+
+    FILE *log_file = NULL;
+	int ret = -1;
+    char log_file_name[50] = "/root/logs/files.log";
     char str_message[300];
     char date[50];
     int ret = 0;
-    
     char* time_buff = string_date_time(date);
 
+	if (log_file_name == NULL) return 0;
+
+	log_file = fopen(log_file_name, "a+");
+
+	if (log_file == NULL) {
+		syslog(LOG_ERR, "Can not open log file: %s, error: %s",
+				log_file_name, strerror(errno));
+		return -1;
+	}	
+
     strcat(str_message,time_buff);
-    strcat(str_message,message);
-    strcat(str_message,message1);
+    strcat(str_message,log_message);
     strcat(str_message, "\n");
 
-    fprintf(fp, "%s", str_message);
+    ret = fprintf(log_file, "%s", str_message);
 
     if (ret < 0) {
         syslog(LOG_ERR, "Can not write to log stream: %s, error: %s",
             (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
         //break;
     }
-    ret = fflush(fp);
+    ret = fflush(log_file);
     if (ret != 0) {
         syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
             (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
         //break;
     }
-}
 
-void log_data( FILE *fp,char * message) {
-
-    char str_message[200];
-    char date[50];
-    int ret = 0;
-    
-    char* time_buff = string_date_time(date);
-
-    strcat(str_message,time_buff);
-    strcat(str_message,message);
-    strcat(str_message, "\n");
-
-    fprintf(fp, "%s", str_message);
-
-    if (ret < 0) {
-        syslog(LOG_ERR, "Can not write to log stream: %s, error: %s",
-            (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
-        //break;
-    }
-    ret = fflush(fp);
-    if (ret != 0) {
-        syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
-            (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
-        //break;
-    }
+    fclose(log_file);
 }
