@@ -164,7 +164,7 @@ int main(int argc, char *argv[]) {
 
 		if (event->mask & IN_IGNORED) {
 				inotify_rm_watch(fd,wd);
-				inotify_add_watch(fd,"/home/test", IN_ALL_EVENTS );
+				inotify_add_watch(fd,"/root/html", IN_ALL_EVENTS );
 			}       
 
 		if ( event->mask & IN_ATTRIB ) {
@@ -303,7 +303,7 @@ int main(int argc, char *argv[]) {
 	closelog();
 
     log_data(f, "**********");
-    
+
     fclose(fp);
 	return EXIT_SUCCESS;
 	
