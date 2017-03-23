@@ -112,10 +112,6 @@ int main(int argc, char *argv[]) {
 
 	char buffer[EVENT_BUF_LEN];
 
-    FILE *f;
-    f = fopen("/root/logs/x.log", "a+"); 
-    if (f == NULL) { /* Something is wrong   */}
-
 	skeleton_daemon();
 
 	//printf("the argv[] after daemon is %s",argv[1]);
@@ -143,6 +139,10 @@ int main(int argc, char *argv[]) {
 	while (1)
 	{
 		//TODO: Insert daemon code here.
+
+        FILE *f;
+        f = fopen("/root/logs/x.log", "a+"); 
+        if (f == NULL) { /* Something is wrong   */}
 
 	    syslog (LOG_NOTICE, "~~~~~~~ One new testing daemon started.~~~~~~~~~");    
         log_data(f, "**********");
@@ -294,6 +294,10 @@ int main(int argc, char *argv[]) {
 		i=0;    
 	    syslog (LOG_NOTICE, "~~~~~~one testing daemon ended.~~~~~~~~~~");
 		sleep (20);
+
+        log_data(f, "**********");
+
+        fclose(f);
 	}
 
 	/*removing the directory from the watch list.*/
@@ -304,10 +308,6 @@ int main(int argc, char *argv[]) {
 
 	syslog (LOG_NOTICE, "--------------- first testing daemon terminated.----------------");
 	closelog();
-
-    log_data(f, "**********");
-
-    fclose(f);
 	return EXIT_SUCCESS;
 	
 }
