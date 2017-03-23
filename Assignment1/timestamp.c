@@ -11,7 +11,7 @@ char* string_date_time(char * buffer_time)
     time ( &rawtime );
     timeinfo = localtime ( &rawtime );
 
-    strftime(buffer, 30, "[%Y-%m-%d %H:%M:%S]", timeinfo);
+    strftime(buffer_time, 30, "[%Y-%m-%d %H:%M:%S]", timeinfo);
 
     return buffer_time;
 }
