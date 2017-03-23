@@ -19,5 +19,6 @@ void write_log_file( char* log_message );
 
 void get_list_of_files();
 void read_str_from_log(char* config_line, char* val);
+char *getUserName();
 
 #endif //ASSIGNMENT1_LOGGER_H

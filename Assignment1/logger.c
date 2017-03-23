@@ -57,8 +57,20 @@ void logErrorMessages( char* message1, char* message2 )
    closelog();
 }
 
-void log_data_two( char * message, char * message1) {
+char *getUserName()
+{
+  uid_t uid = geteuid();
+  struct passwd *pw = getpwuid(uid);
+  if (pw)
+  {
+    return pw->pw_name;
+  }
 
+  return "";
+}
+
+void log_data_two( char * message, char * message1) 
+{
     char str_message[300];
 
     strcat(str_message,message);
@@ -98,6 +110,9 @@ void write_log_file( char* log_message ) {
 	}	
 
     strcat(str_message,time_buff);
+    strcat(str_message," ");
+    strcat(str_message,getUserName());
+    strcat(str_message," ");
     strcat(str_message,log_message);
     strcat(str_message, "\n");
 
