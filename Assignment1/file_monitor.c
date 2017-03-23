@@ -18,6 +18,62 @@
  
 /* Log file*/
 FILE *fp_log;
+
+static void skeleton_daemon() {
+	pid_t pid;
+
+	/* Fork off the parent process */
+	pid = fork();
+
+	/* An error occurred */
+	if (pid < 0){
+		//printf("pid<0 error");
+		exit(EXIT_FAILURE);
+	}
+	/* Success: Let the parent terminate */
+	if (pid > 0){
+		//printf("pid>0 parent terminate");
+		exit(EXIT_SUCCESS);
+	}
+
+	/* On success: The child process becomes session leader */
+	if (setsid() < 0){
+		//printf("setsid <0");
+		exit(EXIT_FAILURE);
+	}
+
+	/* Catch, ignore and handle signals */
+	//TODO: Implement a working signal handler */
+	signal(SIGCHLD, SIG_IGN);
+	signal(SIGHUP, SIG_IGN);
+
+	/* Fork off for the second time*/
+	pid = fork();
+
+	/* An error occurred */
+	if (pid < 0){
+		//printf("pid<0");
+		exit(EXIT_FAILURE);
+	}
+	/* Success: Let the parent terminate */
+	if (pid > 0){
+		//printf("pid > 0 ");
+		exit(EXIT_SUCCESS);
+	}
+	/* Set new file permissions */
+	umask(0);
+
+	/* Change the working directory to the root directory */
+	/* or another appropriated directory */
+	chdir("/");
+
+	/* Close all open file descriptors */
+	int x;
+	for (x = sysconf(_SC_OPEN_MAX); x>0; x--)
+	{
+		close (x);
+	}
+}
  
 /* Add inotify watches to directories immediately under root
  * in addition to itself */
@@ -75,25 +131,9 @@ int main( int argc, char **argv )
   int length, i = 0;
   int fd;
   char buffer[BUF_LEN], root[MAX_LEN];
- 
- 
-  /*Check for supplied path to monitor*/
-  switch(argc)
-    {
-    case 1: printf("No directory specified. Will monitor the entire filesystem...\n\n");
-      strcpy(root,"/");
-      break;
-       
-    case 2: strcpy(root,argv[1]);
-      if(root[strlen(root)-1]!='/')
-        strcat(root,"/");
-      puts(root);
- 
-      break;
-       
-    default: printf("Ignoring all other arguments after the first\n");
-    }
-   
+        
+  strcpy(root,"/root/logs/");     
+    
  
   /* Set up logger*/
   fp_log = fopen("inotify_logger.log","a");
@@ -111,7 +151,9 @@ int main( int argc, char **argv )
   /* Read the sub-directories at one level under argv[1]
    * and monitor them for access */
   add_watches(fd,root);
-   
+
+  skeleton_daemon();
+
   /* do it forever*/
   while(1)
     {
