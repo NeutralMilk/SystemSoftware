@@ -92,7 +92,7 @@ static void skeleton_daemon() {
 
 int main(int argc, char *argv[]) {
 	
-	int length, ret, i = 0;
+	int length, i = 0;
 	int fd;
 
 	int wd;
@@ -137,20 +137,9 @@ int main(int argc, char *argv[]) {
 	while (1)
 	{  
         /* Debug print */
-		ret = fprintf(log_stream, "Debug: %d\n", 0);
+		
         log_data(log_stream, "**********");
-		if (ret < 0) {
-			syslog(LOG_ERR, "Can not write to log stream: %s, error: %s",
-				(log_stream == stdout) ? "stdout" : log_file_name, strerror(errno));
-			//break;
-		}
-		ret = fflush(log_stream);
-		if (ret != 0) {
-			syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
-				(log_stream == stdout) ? "stdout" : log_file_name, strerror(errno));
-			//break;
-		}
-        
+		
 	    /*read to determine the event change happens on directory. Actually this read blocks until the change event occurs*/
 	    syslog (LOG_NOTICE, "BEFORE READ IN BUFFER");
 		length = read( fd, buffer, EVENT_BUF_LEN );
@@ -229,7 +218,7 @@ int main(int argc, char *argv[]) {
 					}
 					else {
 			            syslog (LOG_NOTICE, " file:opening.");
-
+                        log_data(log_stream, "opening file tester");
 						syslog (LOG_NOTICE, " file:%s open.", event->name);
 						//printf( "New file %s open.\n", event->name );
 

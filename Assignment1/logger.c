@@ -56,8 +56,9 @@ void logErrorMessages( char* message1, char* message2 )
 
 void log_data_two( FILE *fp ,char * message, char * message1) {
 
-    char str_message[200];
-    char date[30];
+    char str_message[300];
+    char date[50];
+    int ret = 0;
     
     char* time_buff = string_date_time(date);
 
@@ -65,15 +66,27 @@ void log_data_two( FILE *fp ,char * message, char * message1) {
     strcat(str_message,message);
     strcat(str_message,message1);
     strcat(str_message, "\n");
-    
+
     fprintf(fp, "%s", str_message);
-    
+
+    if (ret < 0) {
+        syslog(LOG_ERR, "Can not write to log stream: %s, error: %s",
+            (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
+        //break;
+    }
+    ret = fflush(log_stream);
+    if (ret != 0) {
+        syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
+            (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
+        //break;
+    }
 }
 
 void log_data( FILE *fp,char * message) {
 
     char str_message[200];
     char date[50];
+    int ret = 0;
     
     char* time_buff = string_date_time(date);
 
@@ -82,4 +95,16 @@ void log_data( FILE *fp,char * message) {
     strcat(str_message, "\n");
 
     fprintf(fp, "%s", str_message);
+
+    if (ret < 0) {
+        syslog(LOG_ERR, "Can not write to log stream: %s, error: %s",
+            (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
+        //break;
+    }
+    ret = fflush(log_stream);
+    if (ret != 0) {
+        syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
+            (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
+        //break;
+    }
 }
