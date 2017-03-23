@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
 			newyear = *localtime(&now);
 			newyear.tm_hour = 14;
 			newyear.tm_min = 22;
-			newyear.tm_sec = 0;
+			newyear.tm_sec = 0
 				
 			//char* c_time_string = ctime(&now);
 			//printf("Time now: %s", c_time_string);
