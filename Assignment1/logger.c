@@ -79,17 +79,17 @@ void write_log_file( char* log_message ) {
     char log_file_name[50] = "/root/logs/files.log";
     char str_message[300];
     char date[50];
-    int ret = 0;
     char* time_buff = string_date_time(date);
 
-	if (log_file_name == NULL) return 0;
+	if (log_file_name == NULL) {
+        syslog(LOG_ERR, "Log file string empty");
+    }
 
 	log_file = fopen(log_file_name, "a+");
 
 	if (log_file == NULL) {
 		syslog(LOG_ERR, "Can not open log file: %s, error: %s",
 				log_file_name, strerror(errno));
-		return -1;
 	}	
 
     strcat(str_message,time_buff);
@@ -101,13 +101,11 @@ void write_log_file( char* log_message ) {
     if (ret < 0) {
         syslog(LOG_ERR, "Can not write to log stream: %s, error: %s",
             (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
-        //break;
     }
     ret = fflush(log_file);
     if (ret != 0) {
         syslog(LOG_ERR, "Can not fflush() log stream: %s, error: %s",
             (fp == stdout) ? "stdout" : "daemon1", strerror(errno));
-        //break;
     }
 
     fclose(log_file);
