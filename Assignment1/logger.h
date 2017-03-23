@@ -17,7 +17,7 @@ void log_data_two(char * message, char * message1);
 void log_data( char * message);
 void write_log_file( char* log_message );
 
-char **get_list_of_files( char **files );
+void get_list_of_files();
 void read_str_from_log(char* config_line, char* val);
 
 #endif //ASSIGNMENT1_LOGGER_H

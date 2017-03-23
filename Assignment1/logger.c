@@ -116,6 +116,7 @@ void write_log_file( char* log_message ) {
     fclose(log_file);
 }
 
+
 void read_str_from_log(char* config_line, char* val) {    
 	char prm_name[20];
 	char prm_name1[20];
@@ -125,7 +126,7 @@ void read_str_from_log(char* config_line, char* val) {
 }
 
 
-char **get_list_of_files( char **files ) {
+void get_list_of_files() {
 
     char **to_be_returned[1000][50];
   
@@ -158,5 +159,5 @@ char **get_list_of_files( char **files ) {
 
     fclose(fp);
 
-    return to_be_returned;
+    //return to_be_returned;
 }

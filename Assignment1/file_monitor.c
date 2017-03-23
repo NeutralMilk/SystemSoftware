@@ -16,18 +16,18 @@
 #define EVENT_SIZE (sizeof (struct inotify_event))
 #define EVENT_BUF_LEN (1024 * (EVENT_SIZE + 16))
 
-char* string_date_time(char * buffer_time)
-{
-    time_t rawtime;
-    struct tm * timeinfo;
+// char* string_date_time(char * buffer_time)
+// {
+//     time_t rawtime;
+//     struct tm * timeinfo;
 
-    time ( &rawtime );
-    timeinfo = localtime ( &rawtime );
+//     time ( &rawtime );
+//     timeinfo = localtime ( &rawtime );
 
-    strftime(buffer_time, 30, "[%Y-%m-%d %H:%M:%S]", timeinfo);
+//     strftime(buffer_time, 30, "[%Y-%m-%d %H:%M:%S]", timeinfo);
 
-    return buffer_time;
-}
+//     return buffer_time;
+// }
 
 static void skeleton_daemon() {
 	pid_t pid;
