@@ -49,18 +49,20 @@ void add_watches(int fd, char *root)
   /* Add watches to the Level 1 sub-dirs*/
   abs_dir = (char *)malloc(MAX_LEN);
   while((entry = readdir(dp)))
-    {
+    { 
+      log_data("Adding watches");
       /* if its a directory, add a watch*/
       if (entry->d_type == DT_DIR)
-        {
+      {
           strcpy(abs_dir,root);
           strcat(abs_dir,entry->d_name);
            
           wd = inotify_add_watch(fd, abs_dir, IN_CREATE | IN_MODIFY | IN_DELETE);
-        //   if (wd == -1)
-        //      // printf("Couldn't add watch to the directory %s\n",abs_dir);
-        //   else
-        //     printf("Watching:: %s\n",abs_dir);
+           if (wd == -1)
+              log_data_two("Could not add watch: ",  abs_dir );
+              // printf("Couldn't add watch to the directory %s\n",abs_dir);
+           else
+             log_data_two("Add watch: ",  abs_dir );
         }
     }
    
