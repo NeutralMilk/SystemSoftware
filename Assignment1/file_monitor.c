@@ -7,14 +7,29 @@
 #include <syslog.h>
 #include <errno.h>
 #include <string.h>
+#include <time.h>
 
 #include <linux/inotify.h>
-#include "timestamp.h"
+
+#include "logger.h"
+
 
 
 #define EVENT_SIZE (sizeof (struct inotify_event))
 #define EVENT_BUF_LEN (1024 * (EVENT_SIZE + 16))
 
+char* string_date_time(char * buffer_time)
+{
+    time_t rawtime;
+    struct tm * timeinfo;
+
+    time ( &rawtime );
+    timeinfo = localtime ( &rawtime );
+
+    strftime(buffer_time, 30, "[%Y-%m-%d %H:%M:%S]", timeinfo);
+
+    return buffer_time;
+}
 
 static void skeleton_daemon() {
 	pid_t pid;
@@ -75,33 +90,6 @@ static void skeleton_daemon() {
 	openlog ("firstdaemon", LOG_PID, LOG_DAEMON);
 }
 
-void log_data_two( FILE *fp ,char * message, char * message1) {
-
-    char str_message[200];
-    char date[50];
-    
-    char* time_buff = string_date_time(date);
-
-    strcat(str_message,time_buff);
-    strcat(str_message,message);
-    strcat(str_message,message1);
-
-    fprintf(fp, "%s", str_message);
-}
-
-void log_data( FILE *fp,char * message) {
-
-    char str_message[200];
-    char date[50];
-    
-    char* time_buff = string_date_time(date);
-
-    strcat(str_message,time_buff);
-    strcat(str_message,message);
-
-    fprintf(fp, "%s", str_message);
-}
-
 int main(int argc, char *argv[]) {
 	
 	int length, i = 0;
@@ -142,7 +130,9 @@ int main(int argc, char *argv[]) {
 
         FILE *f;
         f = fopen("/root/logs/x.log", "a+"); 
-        if (f == NULL) { /* Something is wrong   */}
+        if (f == NULL) { 
+            logErrorMessage("error opening file: /root/logs/x.log");
+        }
 
 	    syslog (LOG_NOTICE, "~~~~~~~ One new testing daemon started.~~~~~~~~~");    
         log_data(f, "**********");
