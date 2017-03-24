@@ -19,6 +19,16 @@
 //     char backup_target[MAX_LLIST_NAME_LEN];
 // } config;
 
+void exec1();
+void exec2();
+//void exec3();
+
+int pid_f;
+int pipe1[2];
+int pipe2[2];
+
+int backup_running;
+
 static void skeleton_daemon() {
 	pid_t pid;
 
@@ -79,20 +89,21 @@ int main(int argc, char *argv[]) {
 
 	int pid;
 	printf("\nProgram Running");
-    
+    backup_running = 0;
 
     skeleton_daemon();
 
     while(1) {
-       
-        char log_directory[50] = "logFolder";
-        char live_site[50] = "/root/live/";
 
-        push_modified_files(live_site, log_directory);
+        if ((pid_f = fork()) == -1) {
+            perror("bad fork2");
+        } else if (pid_f == 0) {
+            exec2();
+        }
 
         struct config_struct config;
         config = read_config_file();
-        if (config.backup_on == 1) {
+        if ((config.backup_on == 1 ) && (backup_running == 0)) {
             logInfoMessages("backup set for ",config.backup_time);
             
             int seconds_diff = getSeconds(config.backup_time);
@@ -100,14 +111,32 @@ int main(int argc, char *argv[]) {
             sprintf(str, "%d", seconds_diff);
             logInfoMessages("seconds until backup ",str);
 
-            sleep(seconds_diff);
-            logInfoMessage("backup starting");
-            backup_folder(config.backup_source, config.backup_target );
-
-            logInfoMessage("updating live starting");
-            update_folder(config.backup_source, config.live_site);
-            
-            logInfoMessage("updating and backing completed");
+            if ((pid_f = fork()) == -1) {
+                perror("bad fork1");
+            } else if (pid_f == 0) {
+                exec1();
+            }
         }
+        sleep(30);
 	}
+}
+
+void exec1() {
+    sleep(seconds_diff);
+    logInfoMessage("backup starting");
+    backup_folder(config.backup_source, config.backup_target );
+
+    logInfoMessage("updating live starting");
+    update_folder(config.backup_source, config.live_site);
+
+    logInfoMessage("updating and backing completed");
+    _exit(1);
+}
+
+void exec2() {
+    char log_directory[50] = "logFolder";
+    char live_site[50] = "/root/live/";
+
+    push_modified_files(live_site, log_directory);
+    _exit(1);
 }

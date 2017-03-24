@@ -203,7 +203,7 @@ void push_modified_files( char* destintation, char* log_path ) {
             strcat(file_directory, file_name);
             
             logInfoMessages( file_directory, destintation );
-            char* args[] = {"cp","-R", file_directory, destintation, NULL};
+            char* args[] = {"cp","--parents", file_directory, destintation, NULL};
             execv("/bin/cp",args); 
 		}
 	}
