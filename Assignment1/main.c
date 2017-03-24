@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
     skeleton_daemon();
 
     while(1) {
-        push_changes("/root/html/")
+        push_changes("/root/html/");
         struct config_struct config;
         config = read_config_file();
         if (config.backup_on == 1) {
