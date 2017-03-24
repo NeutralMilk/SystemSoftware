@@ -21,7 +21,7 @@
 #define BUF_LEN     ( MAX_EVENTS * ( EVENT_SIZE + LEN_NAME )) /*buffer to store the data of events*/
 #define EVENT_BUF_LEN  (1024 * (EVENT_SIZE + 16))
 
-void add_watches(int fd, char *root)
+void add_watches(int fd, char *root, chat * watch_directory)
 {
   int wd;
   char *abs_dir;
@@ -63,11 +63,11 @@ void add_watches(int fd, char *root)
           
            wd = inotify_add_watch(fd, abs_dir, IN_CREATE | IN_MODIFY | IN_DELETE);
            if (wd == -1) {
-              log_data_two("Could not add watch: ",  abs_dir );
+              log_data_two(watch_directory, "Could not add watch: ",  abs_dir );
            }
            else {
                 write_watch_file(abs_dir, wd);
-                log_data_two("Add watch: ",  abs_dir );
+                log_data_two(watch_directory, "Add watch: ",  abs_dir );
            }
         }
     }
@@ -130,7 +130,6 @@ static void skeleton_daemon() {
 		close (x);
 	}
 
-	/* Open the log file */
 	openlog ("firstdaemon", LOG_PID, LOG_DAEMON);
 }
 
@@ -138,8 +137,18 @@ int main(int argc, char *argv[]) {
 	
 	int length, i = 0;
 	int fd;
-
 	int wd;
+
+    char *directory_watch = NULL;
+    char *watch_directory = NULL;
+
+    if (argc <= 3) {
+        printf("Not enough params: fileMonitor -d /root/html -l logFolder");
+        return EXIT_FAILURE;
+    }
+
+    directory_watch = argv[2];
+    watch_directory = argv[4];
 
 	char buffer[EVENT_BUF_LEN];
 
@@ -157,7 +166,7 @@ int main(int argc, char *argv[]) {
 	  perror( "inotify_init" );
 	}
 
-	add_watches(fd,"/root/html/");
+	add_watches(fd,"/root/html/", watch_directory);
 
 	if(wd<0){
 	    syslog(LOG_NOTICE, "wd < 0");
@@ -196,13 +205,13 @@ int main(int argc, char *argv[]) {
 
 			            syslog (LOG_NOTICE, " directory:chaning     ATTRIB .");
 						syslog (LOG_NOTICE, " directory:%s ATTRIB .", event->name);
-                        log_data_two("ATTRIB: directory: ",  event->name );
+                        log_data_two(watch_directory, "ATTRIB: directory: ",  event->name );
 					}   
 					else {
 			            syslog (LOG_NOTICE, " directory:chaning     ATTRIB .");
 
 						syslog (LOG_NOTICE, " file:%s ATTRIB .", event->name); 
-                        log_data_two("ATTRIB: file: ",  event->name );                           
+                        log_data_two(watch_directory, "ATTRIB: file: ",  event->name );                           
 					}   
 				}  
 
@@ -211,13 +220,13 @@ int main(int argc, char *argv[]) {
 						//printf( " directory %s modified .\n", event->name );
 			            syslog (LOG_NOTICE, " dirtory:chaning    !!!!!!! .");
 						syslog (LOG_NOTICE, " directory:%s modify.", event->name);
-                        log_data_two("MODIFIED file: ",  event->name );
+                        log_data_two(watch_directory, "MODIFIED file: ",  event->name );
 					}
 					else {
 			            syslog (LOG_NOTICE, " file  modify:chaning!!! .");
 						syslog (LOG_NOTICE, " file:%s modify.", event->name);
 
-                        log_data_two("MODIFIED file: ",  event->name );
+                        log_data_two(watch_directory, "MODIFIED file: ",  event->name );
 					}
 				}
 
@@ -231,7 +240,7 @@ int main(int argc, char *argv[]) {
 					else {
 						//syslog (LOG_NOTICE, " file modify:changing!!! .");
 					    syslog (LOG_NOTICE, " CLSOE WRITE    !!!!!!! .");  
-                        log_data_two("CLOSE file: ",  event->name );                 
+                        log_data_two(watch_directory, "CLOSE file: ",  event->name );                 
 						//syslog (LOG_NOTICE, " file:%s modify.", event->name);
 					}
 				}
@@ -240,7 +249,7 @@ int main(int argc, char *argv[]) {
 					if ( event->mask & IN_ISDIR ) {
 						//printf( "New directory %s opened.\n", event->name );
 						syslog (LOG_NOTICE, " directory:%s open.", event->name);
-                        log_data_two("OPEN directory: ",  event->name );  
+                        log_data_two(watch_directory, "OPEN directory: ",  event->name );  
 					}
 					else {
 			            syslog (LOG_NOTICE, " file:opening.");
@@ -248,7 +257,7 @@ int main(int argc, char *argv[]) {
 						syslog (LOG_NOTICE, " file:%s open.", event->name);
 						//printf( "New file %s open.\n", event->name );
 
-                        log_data_two("OPEN file: ",  event->name );  
+                        log_data_two(watch_directory, "OPEN file: ",  event->name );  
 					}
 				}
 
@@ -261,7 +270,7 @@ int main(int argc, char *argv[]) {
 			else {
 				syslog (LOG_NOTICE, "new file:%s created.", event->name);
 				//printf( "New file %s created.\n", event->name );
-                log_data_two("NEW file: ",  event->name );  
+                log_data_two(watch_directory, "NEW file: ",  event->name );  
 
 				}
 			}
@@ -269,12 +278,12 @@ int main(int argc, char *argv[]) {
 			if ( event->mask & IN_ISDIR ) {
 				syslog (LOG_NOTICE, "dir:%s is deleted.", event->name);
 				//printf( "Directory %s deleted.\n", event->name );
-                log_data_two("DELETED directory: ",  event->name );  
+                log_data_two(watch_directory, "DELETED directory: ",  event->name );  
 			}
 			else {
 				syslog (LOG_NOTICE, "file:%s is deleted.", event->name);
 				//printf( "File %s deleted.\n", event->name );
-                log_data_two("DELETED file: ",  event->name );  
+                log_data_two(watch_directory, "DELETED file: ",  event->name );  
 			}
 			}
 
@@ -282,12 +291,12 @@ int main(int argc, char *argv[]) {
 					if ( event->mask & IN_ISDIR ) {
 						syslog(LOG_NOTICE, "dir:%s is accessed.", event->name);
 						//printf( "The directory %s was accessed.\n", event->name );
-                        log_data_two("ACCESSED directory: ",  event->name );  
+                        log_data_two(watch_directory, "ACCESSED directory: ",  event->name );  
 					}
 					else {
 						syslog(LOG_NOTICE, "file:%s is accessed.", event->name);
 						//printf( "The file %s was accessed.\n", event->name );
-                        log_data_two("ACCESSED file: ",  event->name );  
+                        log_data_two(watch_directory, "ACCESSED file: ",  event->name );  
 					}   
 				} 
 
@@ -296,12 +305,12 @@ int main(int argc, char *argv[]) {
 						//printf( "New directory %s created.\n", event->name );
 						syslog (LOG_NOTICE, " directory:%s closed.", event->name);
 
-                        log_data_two("CLOSED directory: ",  event->name ); 
+                        log_data_two(watch_directory, "CLOSED directory: ",  event->name ); 
 					}
 					else {
 						syslog (LOG_NOTICE, " file:%s closed.", event->name);
 						//printf( "New file %s created.\n", event->name );
-                        log_data_two("CLOSED file: ",  event->name ); 
+                        log_data_two(watch_directory, "CLOSED file: ",  event->name ); 
 
 					}
 				}

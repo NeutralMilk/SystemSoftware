@@ -68,21 +68,21 @@ char *getUserName()
    // printf("%s\n",p);
 }
 
-void log_data_two( char * message, char * message1) 
+void log_data_two( char* log_path, char * message, char * message1) 
 {
     char str_message[300];
 
     strcat(str_message,message);
     strcat(str_message,message1);
 
-    write_log_file(str_message);
+    write_log_file(log_path, str_message);
 }
 
-void log_data( char * message) {
-    write_log_file(message);
+void log_data( char* log_path, char * message) {
+    write_log_file(log_path, message);
 }
 
-void write_log_file( char* log_message ) {
+void write_log_file( char* log_path, char* log_message ) {
 
     FILE *log_file = NULL;
 	int ret = -1;
@@ -90,6 +90,8 @@ void write_log_file( char* log_message ) {
     char log_file_name[50] = "/root/logs/";
     char log_date[50];    
     char* log_date_buff = str_date_log(log_date);
+    strcat(log_file_name,log_path);
+    strcat(log_file_name,"/");
     strcat(log_file_name,log_date_buff);
     strcat(log_file_name,".log");
 

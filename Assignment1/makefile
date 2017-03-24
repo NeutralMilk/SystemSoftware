@@ -8,7 +8,7 @@ name1 = monitorFile
 OBJDIR = obj
 
 monitorFile:
-	$(CC) -o $(name1) file_monitor.c logger.c
+	$(CC) -o $(name1) file_monitor.c logger.c timestamp.c
 
 myProg: $(objects)
 	$(CC) -o $(name) $(objects) -lm
