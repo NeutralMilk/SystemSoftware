@@ -124,9 +124,10 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     strcat(str_message," ");
 
     char directory_path[100];
+    memset(directory_path, 0, 300);  
 
     if(watch_id != -1) {
-        read_watcher_file(log_message,watch_id, directory_path);
+        read_watcher_file(log_message, watch_id, directory_path);
         strcat(str_message,  directory_path);
     }
     strcat(str_message,log_message);
@@ -238,8 +239,8 @@ void write_watch_file( char* directory_name, int watcher ) {
 }
 
 void read_from_line(char* line, char* val) {    
-    char prm_name[20];
-    sscanf(line, "%s:%s\n", prm_name, val);
+    int watch;
+    sscanf(line, "%s:%d\n",val, watch);
 }
 
 void read_watcher_file(char* directory, int watch_id, char* result ) {
