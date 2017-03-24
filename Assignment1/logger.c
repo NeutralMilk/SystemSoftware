@@ -250,7 +250,7 @@ void write_watch_file( char* directory_name, int watcher ) {
 
 void read_from_line(char* line, char* val) {    
     int prm_name;
-    sscanf(line, "%s %d\n",val, prm_name);
+    sscanf(line, "%s %d\n",val, &prm_name);
 }
 
 void read_watcher_file(char* directory, int watch_id, char* result ) {
