@@ -52,7 +52,7 @@ void add_watches(int fd, char *root, char * watch_directory)
   memset(abs_dir, MAX_LEN, 0);
   while((entry = readdir(dp)))
     { 
-      log_data("Adding watches");
+      log_data(watch_directory, "Adding watches");
       /* if its a directory, add a watch*/
       if (entry->d_type == DT_DIR)
       {
@@ -166,7 +166,7 @@ int main(int argc, char *argv[]) {
 	  perror( "inotify_init" );
 	}
 
-	add_watches(fd,"/root/html/", watch_directory);
+	add_watches(fd,directory_watch, watch_directory);
 
 	if(wd<0){
 	    syslog(LOG_NOTICE, "wd < 0");
@@ -235,7 +235,7 @@ int main(int argc, char *argv[]) {
 						//printf( " directory %s modified .\n", event->name );
 						syslog (LOG_NOTICE, " CLSOE WRITE    !!!!!!! .");
 						//syslog (LOG_NOTICE, " file:%s modify.", event->name);
-                        log_data_two("CLOSE directory: ",  event->name );
+                        log_data_two(watch_directory, "CLOSE directory: ",  event->name );
 					}
 					else {
 						//syslog (LOG_NOTICE, " file modify:changing!!! .");

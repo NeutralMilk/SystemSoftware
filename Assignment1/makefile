@@ -48,4 +48,4 @@ clean:
 	rm $(name) $(objects)
 
 cleanMonitor:
-    rm $(name1) $(oMonitorFiles)
+    rm $(name1) #$(oMonitorFiles)
