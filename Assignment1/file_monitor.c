@@ -153,7 +153,7 @@ int main(int argc, char *argv[]) {
 	  perror( "inotify_init" );
 	}
 
-	add_watches(fd,"/root/html");
+	add_watches(fd,"/root/html/");
 
 	if(wd<0){
 	    syslog(LOG_NOTICE, "wd < 0");
