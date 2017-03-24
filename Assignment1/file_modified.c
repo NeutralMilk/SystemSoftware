@@ -13,7 +13,7 @@ void push_changes(char * directory) {
 
     //find /root/html -type f -cmin -5 -printf '%TY-%Tm-%Td  %TT %u %p\n'
     char* args[] = {"find",directory, "-type", "f","-cmin", "-5", 
-                "-printf", "'%TY-%Tm-%Td  %TT %u %p\n'", ">", "/root/logs/text.txt" NULL};
+                "-printf", "'%TY-%Tm-%Td  %TT %u %p\n'", ">", "/root/logs/text.txt", NULL};
     execv("/bin/find",args); 
     logInfoMessage("push to live completed");
 }

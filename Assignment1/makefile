@@ -1,11 +1,11 @@
 CC = gcc
 objects = obj/main.o obj/backup.o obj/timestamp.o obj/configuration.o obj/logger.o obj/permissions.o obj/audit.o obj/file_modified.o
-monitor_objects = obj/file_monitor.o
+#monitor_objects = obj/file_monitor.o
 cfiles =  main.c backup.c timestamp.c configuration.c logger.c permissions.c audit.c file_modified.c
 headers = backup.h timestamp.h configuration.h logger.h permissions.h audit.h file_modified.h
 name = myProg
-name1 = monitorFile
-OBJDIR = obj 
+#name1 = monitorFile
+OBJDIR = obj
 
 #monitorFile: $(monitor_objects)
 #	$(CC) -o $(name1) file_monitor.c 

@@ -97,16 +97,16 @@ void write_log_file( char* log_message ) {
     char* time_buff = string_date_time(date);
     char str_message[300];
 
-	if (log_file_name == NULL) {
-        syslog(LOG_ERR, "Log file string empty");
-    }
+	//if (log_file_name == NULL) {
+    //    syslog(LOG_ERR, "Log file string empty");
+    //}
 
 	log_file = fopen(log_file_name, "a+");
 
-	if (log_file == NULL) {
-		syslog(LOG_ERR, "Can not open log file: %s, error: %s",
-				log_file_name, strerror(errno));
-	}	
+	//if (log_file == NULL) {
+	//	syslog(LOG_ERR, "Can not open log file: %s, error: %s",
+	//			log_file_name, strerror(errno));
+	//}	
 
     memset(str_message, 300, 0);  
 
@@ -186,16 +186,16 @@ void write_watch_file( char* directory_name, int watcher ) {
     char watch_file_name[50] = "/root/logs/watcher.txt";
     char str_message[300];    
 
-	if (watch_file_name == NULL) {
-        syslog(LOG_ERR, "watch file string empty");
-    }
+	// if (watch_file_name == NULL) {
+    //     syslog(LOG_ERR, "watch file string empty");
+    // }
 
 	watch_file = fopen(watch_file_name, "a+");
 
-	if (watch_file == NULL) {
-		syslog(LOG_ERR, "Can not open log file: %s, error: %s",
-				watch_file_name, strerror(errno));
-	}	
+	// if (watch_file == NULL) {
+	// 	syslog(LOG_ERR, "Can not open log file: %s, error: %s",
+	// 			watch_file_name, strerror(errno));
+	// }	
 
     memset(str_message, 300, 0);  
     

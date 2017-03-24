@@ -31,7 +31,7 @@ int unlockAllFiles(char* path) {
     struct stat buffer;
     struct stat st;
 
-    sleep(10);
+    //sleep(10);
 
     mode_t mode;
 	stat(path, &st);

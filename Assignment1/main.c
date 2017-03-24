@@ -73,9 +73,6 @@ static void skeleton_daemon() {
 	{
 		close (x);
 	}
-
-	/* Open the log file */
-	openlog ("program started", LOG_PID, LOG_DAEMON);
 }
 
 int main(int argc, char *argv[]) {
