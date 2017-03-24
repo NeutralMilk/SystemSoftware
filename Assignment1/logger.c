@@ -126,7 +126,7 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     strcat(str_message,getUserName());
     strcat(str_message," ");
 
-    if(watch_id != -1) {
+    if(watch_id) {
         read_watcher_file(log_message, watch_id, directory_path);
         strcat(str_message,  directory_path);
     }
