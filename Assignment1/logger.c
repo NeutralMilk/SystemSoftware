@@ -108,7 +108,7 @@ void write_log_file( char* log_message ) {
 	//			log_file_name, strerror(errno));
 	//}	
 
-    memset(str_message, 300, 0);  
+    memset(str_message, 0, 300);  
 
     strcat(str_message,time_buff);
     strcat(str_message," ");
@@ -197,7 +197,7 @@ void write_watch_file( char* directory_name, int watcher ) {
 	// 			watch_file_name, strerror(errno));
 	// }	
 
-    memset(str_message, 300, 0);  
+    memset(str_message, 0, 300);  
     
     char str[10];
     sprintf(str, "%d", watcher);

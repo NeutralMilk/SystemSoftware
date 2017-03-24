@@ -9,7 +9,7 @@
 #include "configuration.h"
 #include "timestamp.h"
 #include "logger.h"
-#include "file_modified.h"
+
 
 // struct config_struct { 
 //     int bytes_per_line;
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
     skeleton_daemon();
 
     while(1) {
-        push_changes("/root/html/");
+       
         struct config_struct config;
         config = read_config_file();
         if (config.backup_on == 1) {
