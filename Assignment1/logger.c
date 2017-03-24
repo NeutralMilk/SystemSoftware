@@ -152,7 +152,7 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     fclose(log_file);
 }
 
-void read_str_from_log(char* config_line, char* file, char* directory_path ) {    
+void read_from_log(char* config_line, char* file, char* directory_path ) {    
 	char date[20];
 	char user[20];
 	char folder[20];
@@ -190,7 +190,7 @@ void push_modified_files( char* destintation, char* log_path ) {
 			char file_name[50];
             char directory_path[50];
             char file_directory[100];
-			read_str_from_log(buf, file_name, directory_path);
+			read_from_log(buf, file_name, directory_path);
 
             strcat(file_directory, directory_path);
             strcat(file_directory, file_name);
@@ -198,7 +198,6 @@ void push_modified_files( char* destintation, char* log_path ) {
             logInfoMessages( file_directory, destintation );
             //char* args[] = {"cp","-R", file_directory, destintation, NULL};
             //execv("/bin/cp",args); 
-            
 		}
 	}
 

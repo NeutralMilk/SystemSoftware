@@ -11,9 +11,6 @@ name = myProg
 name1 = monitorFile
 OBJDIR = obj
 
-monitorFile:
-	$(CC) -o $(name1) $(cMonitorFiles)
-
 myProg: $(objects)
 	$(CC) -o $(name) $(objects) -lm
 
@@ -46,6 +43,9 @@ debug: $(cfiles)
 
 clean:
 	rm $(name) $(objects)
+
+monitorFile:
+	$(CC) -o $(name1) $(cMonitorFiles)
 
 #cleanMonitor:
 #    rm $(name1) #$(oMonitorFiles)
