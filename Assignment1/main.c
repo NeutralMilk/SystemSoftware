@@ -86,9 +86,17 @@ int main(int argc, char *argv[]) {
     push_live = 1;
     nBytes = -1;
 
+    pipe(pipe1);
+    pipe(pipe2);
+
     skeleton_daemon();
 
     while(1) {  
+
+        memset(readBuffer, 0, 10);
+
+        close(pipe1[1]);
+        close(pipe2[1]);
 
         nBytes = read(pipe2[0], readBuffer, sizeof(readBuffer));
 
@@ -166,7 +174,7 @@ void exec1( int seconds, char* source, char* target ) {
      close(pipe1[0]);
      write(pipe1[1], "1", strlen("1") );
 
-    _exit(0);
+    _exit(1);
 }
 
 void exec2() {
@@ -178,5 +186,5 @@ void exec2() {
     close(pipe2[0]);
     write(pipe2[1], "1", strlen("1") );
     
-    _exit(0);
+    _exit(1);
 }
