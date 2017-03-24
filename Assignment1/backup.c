@@ -13,13 +13,10 @@
 
 void backup_folder( char * sourceFile, char * targetFile )
 {   
-    //locking sourceFile
     lockAllFiles(sourceFile);
 
     char date[50];
     char* time_buff = string_date(date);
-    //char source_file[255] =  "/Users/timothybarnard/Documents/SystemSoftware/Assignment1/html";
-    //char target_file[255] =  "/Users/timothybarnard/Documents/SystemSoftware/Assignment1/folder/";
     strcat(targetFile,time_buff);
 
     char* args[] = {"cp","-R", sourceFile, targetFile, NULL};
@@ -31,7 +28,6 @@ void backup_folder( char * sourceFile, char * targetFile )
 
 void update_folder( char * sourceFile, char * targetFile )
 {   
-    //locking sourceFile
     lockAllFiles(targetFile);
 
     char* args[] = {"cp","-R", sourceFile, targetFile, NULL};

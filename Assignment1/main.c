@@ -35,7 +35,6 @@ char readBuffer[10];
 
 static void skeleton_daemon() {
 	pid_t pid;
-
 	/* Fork off the parent process */
 	pid = fork();
 
@@ -49,21 +48,13 @@ static void skeleton_daemon() {
 		//printf("pid>0 parent terminate");
 		exit(EXIT_SUCCESS);
 	}
-
 	/* On success: The child process becomes session leader */
 	if (setsid() < 0){
 		//printf("setsid <0");
 		exit(EXIT_FAILURE);
 	}
-
-	/* Catch, ignore and handle signals */
-	//TODO: Implement a working signal handler */
-	//signal(SIGCHLD, SIG_IGN);
-	//signal(SIGHUP, SIG_IGN);
-
 	/* Fork off for the second time*/
 	pid = fork();
-
 	/* An error occurred */
 	if (pid < 0){
 		//printf("pid<0");
@@ -76,11 +67,9 @@ static void skeleton_daemon() {
 	}
 	/* Set new file permissions */
 	umask(0);
-
 	/* Change the working directory to the root directory */
 	/* or another appropriated directory */
 	chdir("/");
-
 	/* Close all open file descriptors */
 	int x;
 	for (x = sysconf(_SC_OPEN_MAX); x>0; x--)
