@@ -15,7 +15,7 @@ monitorFile:
 	$(CC) -o $(name1) $(cMonitorFiles)
 
 cleanMonitor:
-        rm $(name) $(oMonitorFiles)
+    rm $(name) $(oMonitorFiles)
 
 myProg: $(objects)
 	$(CC) -o $(name) $(objects) -lm
