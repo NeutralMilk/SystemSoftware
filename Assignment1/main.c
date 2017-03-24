@@ -166,7 +166,7 @@ void exec1( int seconds, char* source, char* target ) {
      close(pipe1[0]);
      write(pipe1[1], "1", strlen("1") );
 
-    _exit(1);
+    _exit(0);
 }
 
 void exec2() {
@@ -178,5 +178,5 @@ void exec2() {
     close(pipe2[0]);
     write(pipe2[1], "1", strlen("1") );
     
-    _exit(1);
+    _exit(0);
 }
