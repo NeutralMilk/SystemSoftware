@@ -105,7 +105,7 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     char* time_buff = string_date_time(date);
     char str_message[700];
 
-    char directory_path[100];
+    char directory_path[300];
     memset(directory_path, 0, 300);  
 
 	//if (log_file_name == NULL) {
