@@ -37,6 +37,7 @@ void add_watches(int fd, char *root)
  
   /* add watch to starting directory */
   wd = inotify_add_watch(fd, root, IN_CREATE | IN_MODIFY | IN_DELETE);
+  write_watch_file(root, wd);
 //   if (wd == -1)
 //     {
 //       //fprintf(fp_log,"Couldn't add watch to %s\n",root);
