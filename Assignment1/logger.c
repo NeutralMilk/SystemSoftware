@@ -105,6 +105,9 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     char* time_buff = string_date_time(date);
     char str_message[300];
 
+    char directory_path[100];
+    memset(directory_path, 0, 300);  
+
 	//if (log_file_name == NULL) {
     //    syslog(LOG_ERR, "Log file string empty");
     //}
@@ -122,9 +125,6 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     strcat(str_message," ");
     strcat(str_message,getUserName());
     strcat(str_message," ");
-
-    char directory_path[100];
-    memset(directory_path, 0, 300);  
 
     if(watch_id != -1) {
         read_watcher_file(log_message, watch_id, directory_path);
@@ -239,7 +239,7 @@ void write_watch_file( char* directory_name, int watcher ) {
 }
 
 void read_from_line(char* line, char* val) {    
-    int prm_name[20];
+    char prm_name[20];
     sscanf(line, "%s:%s\n",val, prm_name);
 }
 
