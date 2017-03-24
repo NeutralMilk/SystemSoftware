@@ -114,20 +114,20 @@ int main(int argc, char *argv[]) {
             if ((pid_f = fork()) == -1) {
                 perror("bad fork1");
             } else if (pid_f == 0) {
-                exec1();
+                exec1( seconds_diff, config.backup_source,config.backup_target  );
             }
         }
         sleep(30);
 	}
 }
 
-void exec1() {
+void exec1( int seconds, char* source, char* target ) {
     sleep(seconds_diff);
     logInfoMessage("backup starting");
-    backup_folder(config.backup_source, config.backup_target );
+    backup_folder(source, target );
 
-    logInfoMessage("updating live starting");
-    update_folder(config.backup_source, config.live_site);
+    //logInfoMessage("updating live starting");
+    //update_folder(config.backup_source, config.live_site);
 
     logInfoMessage("updating and backing completed");
     _exit(1);
