@@ -154,11 +154,13 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
 
 void read_from_log(char* config_line, char* file, char* directory_path ) {    
 	char date[20];
+    char date1[20];
 	char user[20];
 	char folder[20];
 	char state[20];
     char file_type[20];
-	sscanf(config_line, "%s %s %s %s %s %s\n", date, user, directory_path, state, file_type, file);
+	sscanf(config_line, "%s %s %s %s %s %s %s\n", 
+            date, date1, user, directory_path, state, file_type, file);
 }
 
 

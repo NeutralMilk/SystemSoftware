@@ -31,7 +31,6 @@ struct config_struct read_config_file() {
     FILE *fp;
     char buf[100];
     char config_filename[255] = "/root/config.txt"; 
-    //"/Users/timothybarnard/Documents/SystemSoftware/Assignment1/tim.txt";
 
     if ((fp=fopen(config_filename, "r")) == NULL) {
         logErrorMessages("Failed to open config file", config_filename);
