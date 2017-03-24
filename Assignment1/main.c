@@ -21,7 +21,7 @@
 
 void exec1();
 void exec2();
-//void exec3();
+void exec3();
 
 int pid_f;
 int pipe1[2];
@@ -106,6 +106,7 @@ int main(int argc, char *argv[]) {
             if ((pid_f = fork()) == -1) {
                 logInfoMessage("bad fork for exec2");
             } else if (pid_f == 0) {
+                push_live = 0;
                 exec2();
             }
         } 
@@ -121,6 +122,11 @@ int main(int argc, char *argv[]) {
 
         struct config_struct config;
         config = read_config_file();
+
+        if(config.backup_now ==1 ) {
+             exec3( config.backup_source,config.backup_target  );
+        }
+
         if ((config.backup_on == 1 ) && (backup_running == 1)) {
             logInfoMessages("backup set for ",config.backup_time);
             
@@ -132,11 +138,19 @@ int main(int argc, char *argv[]) {
             if ((pid_f = fork()) == -1) {
                 logInfoMessage("bad fork for exec1");
             } else if (pid_f == 0) {
+                backup_running = 0;
                 exec1( seconds_diff, config.backup_source,config.backup_target  );
             }
         }
         sleep(30);
 	}
+}
+
+void exec3( char* source, char* target ) {
+
+    logInfoMessage("backup starting");
+    backup_folder(source, target );
+    logInfoMessage("updating and backing completed");
 }
 
 void exec1( int seconds, char* source, char* target ) {

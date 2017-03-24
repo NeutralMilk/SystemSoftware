@@ -7,6 +7,7 @@
 struct config_struct { 
     int bytes_per_line;
     int backup_on;
+    int backup_now;
     char backup_time[256];
     char backup_source[256];
     char backup_target[256];

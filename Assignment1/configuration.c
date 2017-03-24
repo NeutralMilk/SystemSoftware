@@ -63,6 +63,11 @@ struct config_struct read_config_file() {
          if (strstr(buf, "LIVE ")) {
             read_str_from_config_line(buf, config.live_site);
         }
+
+         if (strstr(buf, "DO_BACKUP_NOW  ")) {
+            config.backup_now = read_int_from_config_line(buf);
+        }
+
     }
     char str[10];
     sprintf(str, "%d", config.backup_on);

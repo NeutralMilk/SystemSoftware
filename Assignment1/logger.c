@@ -110,16 +110,7 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     char directory_path[300];
     memset(directory_path, 0, 300);  
 
-	//if (log_file_name == NULL) {
-    //    syslog(LOG_ERR, "Log file string empty");
-    //}
-
 	log_file = fopen(log_file_name, "a+");
-
-	//if (log_file == NULL) {
-	//	syslog(LOG_ERR, "Can not open log file: %s, error: %s",
-	//			log_file_name, strerror(errno));
-	//}	
 
     memset(str_message, 0, 700);  
 

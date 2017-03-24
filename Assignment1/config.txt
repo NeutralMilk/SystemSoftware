@@ -15,3 +15,6 @@ TARGET /Users/timothybarnard/Documents/SystemSoftware/Assignment1/folder/
 
 #live site
 LIVE /Users/timothybarnard/Documents/SystemSoftware/Assignment1/folder/www
+
+#backup enabled
+DO_BACKUP_NOW 0
