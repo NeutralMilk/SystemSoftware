@@ -197,6 +197,8 @@ void write_watch_file( char* directory_name, int watcher ) {
 				watch_file_name, strerror(errno));
 	}	
 
+    memset(str_message, 300, 0);  
+    
     char str[10];
     sprintf(str, "%d", watcher);
 

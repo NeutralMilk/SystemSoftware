@@ -60,13 +60,13 @@ void add_watches(int fd, char *root)
           strcpy(abs_dir,root);
           strcat(abs_dir,entry->d_name);
           
-          wd = inotify_add_watch(fd, abs_dir, IN_CREATE | IN_MODIFY | IN_DELETE);
-           if (wd == -1)
+           wd = inotify_add_watch(fd, abs_dir, IN_CREATE | IN_MODIFY | IN_DELETE);
+           if (wd == -1) {
               log_data_two("Could not add watch: ",  abs_dir );
-              // printf("Couldn't add watch to the directory %s\n",abs_dir);
+           }
            else {
-             log_data_two("Add watch: ",  abs_dir );
-             write_watch_file(abs_dir, wd);
+                write_watch_file(abs_dir, wd);
+                log_data_two("Add watch: ",  abs_dir );
            }
         }
     }
