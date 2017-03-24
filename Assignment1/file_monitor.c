@@ -149,7 +149,7 @@ int main(int argc, char *argv[]) {
 
     directory_watch = argv[2];
     watch_log = argv[4];
-    print("%s", watch_log);
+    printf("%s", watch_log);
 
 	char buffer[EVENT_BUF_LEN];
 

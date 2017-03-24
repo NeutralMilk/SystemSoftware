@@ -45,7 +45,7 @@ debug: $(cfiles)
 	$(CC) -g $(cfiles) -lm -o $(name)
 
 clean:
-	rm $(name) $(objects).
+	rm $(name) $(objects)
 
-cleanMonitor:
-    rm $(name1) #$(oMonitorFiles)
+#cleanMonitor:
+#    rm $(name1) #$(oMonitorFiles)
