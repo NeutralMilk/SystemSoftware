@@ -192,6 +192,11 @@ void push_modified_files( char* destintation, char* log_path ) {
 			char file_name[50];
             char directory_path[50];
             char file_directory[100];
+
+            memset(file_name, 0, 50);
+            memset(directory_path, 0, 50);
+            memset(file_directory, 0, 100);
+
 			read_from_log(buf, file_name, directory_path);
 
             strcat(file_directory, directory_path);
