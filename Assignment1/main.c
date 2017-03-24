@@ -101,6 +101,7 @@ int main(int argc, char *argv[]) {
         nBytes = read(pipe2[0], readBuffer, sizeof(readBuffer));
 
         if (strcmp(readBuffer,"1") == 0) {
+            logInfoMessage("push_live set to 1");
             push_live = 1;
         } 
 
@@ -122,6 +123,7 @@ int main(int argc, char *argv[]) {
         nBytes = read(pipe1[0], readBuffer, sizeof(readBuffer));
 
         if (strcmp(readBuffer,"1") == 0) {
+            logInfoMessage("backup_running set to 1");
             backup_running = 1;
         }
         if (strcmp(readBuffer,"0") == 0) {
