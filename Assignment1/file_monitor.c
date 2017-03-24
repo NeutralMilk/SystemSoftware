@@ -49,6 +49,7 @@ void add_watches(int fd, char *root)
  
   /* Add watches to the Level 1 sub-dirs*/
   abs_dir = (char *)malloc(MAX_LEN);
+  memset(abs_dir, MAX_LEN, 0);
   while((entry = readdir(dp)))
     { 
       log_data("Adding watches");
