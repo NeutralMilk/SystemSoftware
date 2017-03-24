@@ -4,11 +4,11 @@ objects = obj/main.o obj/backup.o obj/timestamp.o obj/configuration.o obj/logger
 cfiles =  main.c backup.c timestamp.c configuration.c logger.c permissions.c audit.c #file_modified.c
 headers = backup.h timestamp.h configuration.h logger.h permissions.h audit.h #file_modified.h
 name = myProg
-#name1 = monitorFile
+name1 = monitorFile
 OBJDIR = obj
 
-#monitorFile: $(monitor_objects)
-#	$(CC) -o $(name1) file_monitor.c 
+monitorFile:
+	$(CC) -o $(name1) file_monitor.c logger.c
 
 myProg: $(objects)
 	$(CC) -o $(name) $(objects) -lm
