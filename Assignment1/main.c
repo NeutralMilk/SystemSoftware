@@ -9,6 +9,7 @@
 #include "configuration.h"
 #include "timestamp.h"
 #include "logger.h"
+#include "file_modified.h"
 
 // struct config_struct { 
 //     int bytes_per_line;
@@ -18,79 +19,92 @@
 //     char backup_target[MAX_LLIST_NAME_LEN];
 // } config;
 
+static void skeleton_daemon() {
+	pid_t pid;
+
+	/* Fork off the parent process */
+	pid = fork();
+
+	/* An error occurred */
+	if (pid < 0){
+		//printf("pid<0 error");
+		exit(EXIT_FAILURE);
+	}
+	/* Success: Let the parent terminate */
+	if (pid > 0){
+		//printf("pid>0 parent terminate");
+		exit(EXIT_SUCCESS);
+	}
+
+	/* On success: The child process becomes session leader */
+	if (setsid() < 0){
+		//printf("setsid <0");
+		exit(EXIT_FAILURE);
+	}
+
+	/* Catch, ignore and handle signals */
+	//TODO: Implement a working signal handler */
+	signal(SIGCHLD, SIG_IGN);
+	signal(SIGHUP, SIG_IGN);
+
+	/* Fork off for the second time*/
+	pid = fork();
+
+	/* An error occurred */
+	if (pid < 0){
+		//printf("pid<0");
+		exit(EXIT_FAILURE);
+	}
+	/* Success: Let the parent terminate */
+	if (pid > 0){
+		//printf("pid > 0 ");
+		exit(EXIT_SUCCESS);
+	}
+	/* Set new file permissions */
+	umask(0);
+
+	/* Change the working directory to the root directory */
+	/* or another appropriated directory */
+	chdir("/");
+
+	/* Close all open file descriptors */
+	int x;
+	for (x = sysconf(_SC_OPEN_MAX); x>0; x--)
+	{
+		close (x);
+	}
+
+	/* Open the log file */
+	openlog ("program started", LOG_PID, LOG_DAEMON);
+}
+
 int main(int argc, char *argv[]) {
 
 	int pid;
 	printf("\nProgram Running");
-    logInfoMessage("program started");
-	pid = fork();
-	
-    // struct config_struct config;
-    // config = read_config_file();
-    // int seconds_diff = getSeconds(config.backup_time);
+    
+    skeleton_daemon();
 
-    // printf("TBPL = %d\n", config.bytes_per_line);
-    // printf("BACKUP = %d\n", config.backup_on);
-    // printf("BKUP_TIME = %s\n", config.backup_time);
-    // printf("SOURCE = %s\n", config.backup_source);
-    // printf("TARGET = %s\n", config.backup_target);
+    while(1) {
+        push_changes("/root/html/")
+        struct config_struct config;
+        config = read_config_file();
+        if (config.backup_on == 1) {
+            logInfoMessages("backup set for ",config.backup_time);
+            
+            int seconds_diff = getSeconds(config.backup_time);
+            char str[10];
+            sprintf(str, "%d", seconds_diff);
+            logInfoMessages("seconds until backup ",str);
 
-    // int seconds_diff = getSeconds(config.backup_time);
+            sleep(seconds_diff);
+            logInfoMessage("backup starting");
+            backup_folder(config.backup_source, config.backup_target );
 
-    // printf("seconds_diff = %d\n", seconds_diff);
-
-	if( pid > 0) {
-		printf("\nMe Parent");
-		sleep(10);
-        logInfoMessage("Parent exited");
-		exit(EXIT_SUCCESS);
-	
-	} else {
-		
-		//Step1: Create Orphan
-		
-		//Step2: Set sessionID
-		if(setsid() < 0) { 
-            logErrorMessage("set sessionID not working");
-            exit(EXIT_FAILURE);
+            logInfoMessage("updating live starting");
+            update_folder(config.backup_source, config.live_site);
+            
+            logInfoMessage("updating and backing completed");
         }
-		
-		//Step3: unmask - file priveledges to read and write
-		umask(0);
-		
-		//Step4: Change file directoy
-		if(chdir("/") < 0 ) { 
-            logErrorMessage("not changing file root directoy");
-            exit(EXIT_FAILURE);
-        }
-		
-		//Step5: close file descriptors
-		int x;
-		for(x = sysconf(_SC_OPEN_MAX); x>=0; x--) {
-			close(x);
-		}
-		
-		while(1) {
-
-            struct config_struct config;
-            config = read_config_file();
-            if (config.backup_on == 1) {
-                logInfoMessages("backup set for ",config.backup_time);
-                
-                int seconds_diff = getSeconds(config.backup_time);
-                char str[10];
-                sprintf(str, "%d", seconds_diff);
-                logInfoMessages("seconds until backup ",str);
-
-			    sleep(seconds_diff);
-                logInfoMessage("backup starting");
-			    backup_folder(config.backup_source, config.backup_target );
-
-                logInfoMessage("updating live starting");
-                update_folder(config.backup_source, config.live_site);
-                
-                logInfoMessage("updating and backing completed");
-            }
-		}
 	}
 }

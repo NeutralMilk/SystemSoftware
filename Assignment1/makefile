@@ -1,8 +1,8 @@
 CC = gcc
-objects = obj/main.o obj/backup.o obj/timestamp.o obj/configuration.o obj/logger.o obj/permissions.o obj/audit.o
+objects = obj/main.o obj/backup.o obj/timestamp.o obj/configuration.o obj/logger.o obj/permissions.o obj/audit.o obj/file_modified.o
 monitor_objects = obj/file_monitor.o
-cfiles =  main.c backup.c timestamp.c configuration.c logger.c permissions.c audit.c
-headers = backup.h timestamp.h configuration.h logger.h permissions.h audit.h
+cfiles =  main.c backup.c timestamp.c configuration.c logger.c permissions.c audit.c file_modified.c
+headers = backup.h timestamp.h configuration.h logger.h permissions.h audit.h file_modified.h
 name = myProg
 name1 = monitorFile
 OBJDIR = obj 
@@ -15,6 +15,9 @@ myProg: $(objects)
 
 $(OBJDIR)/main.o : main.c $(headers)
 	$(CC) -c main.c -o $(OBJDIR)/main.o
+
+$(OBJDIR)/file_modified.o : file_modified.c $(headers)
+	$(CC) -c file_modified.c -o $(OBJDIR)/file_modified.o
 
 $(OBJDIR)/audit.o : audit.c $(headers)
 	$(CC) -c audit.c -o $(OBJDIR)/audit.o
