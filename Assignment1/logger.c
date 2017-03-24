@@ -68,25 +68,25 @@ char *getUserName()
    // printf("%s\n",p);
 }
 
-void log_data_two( char * log_path, char * message, char * message1) 
+void log_data_two( char * log_path, int watch_id, char * message, char * message1) 
 {
     char str_message[300];
 
     strcat(str_message,message);
     strcat(str_message,message1);
 
-    write_log_file(log_path, str_message);
+    write_log_file(log_path, str_message, watch_id);
 }
 
 void log_data( char * log_path, char * message) {
-    write_log_file(log_path, message);
+    write_log_file(log_path, message, -1);
 }
 
-void write_log_file( char * log_path, char* log_message ) {
+void write_log_file( char * log_path, char* log_message, int watch_id ) {
 
     FILE *log_file = NULL;
 	int ret = -1;
-
+    
     char log_file_name[150] = "/root/logs/";
     char log_date[50];
     char* log_date_buff = str_date_log(log_date);
@@ -122,6 +122,10 @@ void write_log_file( char * log_path, char* log_message ) {
     strcat(str_message," ");
     strcat(str_message,getUserName());
     strcat(str_message," ");
+
+    if(watch_id != -1) {
+        strcat(str_message, read_watcher_file(log_message,watch_id) );
+    }
     strcat(str_message,log_message);
     strcat(str_message, "\n");
 
@@ -228,4 +232,35 @@ void write_watch_file( char* directory_name, int watcher ) {
     }
 
     fclose(watch_file);
+}
+
+void read_from_line(char* line, char* val) {    
+    char prm_name[20];
+    sscanf(line, "%s:%s\n", prm_name, val);
+}
+
+char* read_watcher_file(char* directory, int watch_id ) {
+
+    FILE *fp;
+    char buf[100];
+    char directory_path[100];
+
+    char watch_file_name[50] = "/root/logs/watcher.txt";
+
+    if ((fp=fopen(watch_file_name, "r")) == NULL) {
+        logErrorMessages("Failed to open watch file", watch_file_name);
+    }
+
+    char str[10];
+    sprintf(str, "%d", watch_id);
+    
+    while(! feof(fp)) {
+        fgets(buf, 100, fp);
+        if (strstr(buf, str)) {
+           read_from_line(buf, directory_path);
+        }
+    }
+
+    fclose(fp);
+    return directory_path;
 }
