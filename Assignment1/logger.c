@@ -127,8 +127,8 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     strcat(str_message," "); 
 
     //if(watch_id) {
-        read_watcher_file(log_message, watch_id, directory_path);
-        strcat(str_message,  "/var/html/");
+    //    read_watcher_file(log_message, watch_id, directory_path);
+    //    strcat(str_message,  "/var/html/");
     //}
     strcat(str_message,log_message);
     strcat(str_message, "\n");
