@@ -78,9 +78,11 @@ void log_data_two( char * log_path,char * message, char * message1, int watch_id
     write_log_file(log_path, str_message, watch_id);
 }
 
+
 void log_data( char * log_path, char * message) {
-    write_log_file(log_path, message, 0);
+    write_log_file(log_path, message, -1);
 }
+
 
 void write_log_file( char * log_path, char* log_message, int watch_id ) {
 
@@ -90,12 +92,12 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     char log_file_name[150] = "/root/logs/";
     char log_date[50];
     char* log_date_buff = str_date_log(log_date);
-    strcat(log_file_name,"logFolder");
+    strcat(log_file_name,log_path);
 
-    //struct stat st = {0};
-    //if (stat(log_file_name, &st) == -1) {
-     //   mkdir(log_file_name, 0700);
-    //}
+    struct stat st = {0};
+    if (stat(log_file_name, &st) == -1) {
+        mkdir(log_file_name, 0700);
+    }
 
     strcat(log_file_name,"/");
     strcat(log_file_name,log_date_buff);
@@ -126,10 +128,10 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     strcat(str_message,getUserName());
     strcat(str_message, " "); 
 
-    //if(watch_id) {
-    //    read_watcher_file(log_message, watch_id, directory_path);
-    //    strcat(str_message,  "/var/html/");
-    //}
+    if(watch_id) {
+        read_watcher_file(log_message, watch_id, directory_path);
+        strcat(str_message,  "/var/html/");
+    }
     strcat(str_message,log_message);
     strcat(str_message, "\n");
 
