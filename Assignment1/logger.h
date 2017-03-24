@@ -17,11 +17,12 @@ void log_data_two( char * log_path,char * message, char * message1, int watch_id
 void log_data(char * log_path, char * message);
 void write_log_file( char * log_path, char* log_message, int watch_id );
 
-void get_list_of_files();
 void read_str_from_log(char* config_line, char* val);
 char *getUserName();
 
 void read_from_line(char* line, char* val);
 void read_watcher_file(char* directory, int watch_id, char* result );
+
+void push_modified_files( char* destintation, char* log_path );
 
 #endif //ASSIGNMENT1_LOGGER_H

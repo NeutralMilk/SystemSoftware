@@ -80,10 +80,16 @@ int main(int argc, char *argv[]) {
 	int pid;
 	printf("\nProgram Running");
     
+
     skeleton_daemon();
 
     while(1) {
        
+        char log_directory[50] = "logFolder";
+        char live_site[50] = "/root/live/";
+
+        push_modified_files(live_site, log_directory);
+
         struct config_struct config;
         config = read_config_file();
         if (config.backup_on == 1) {

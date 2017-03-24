@@ -127,11 +127,13 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     strcat(str_message, " ");
     strcat(str_message,getUserName());
     strcat(str_message, " "); 
-
-    if(watch_id) {
+    
+    if(watch_id != -1) {
         read_watcher_file(log_message, watch_id, directory_path);
-        strcat(str_message,  "/var/html/");
+        strcat(str_message, directory_path );
     }
+    strcat(str_message, " "); 
+
     strcat(str_message,log_message);
     strcat(str_message, "\n");
 
@@ -150,19 +152,19 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     fclose(log_file);
 }
 
-void read_str_from_log(char* config_line, char* val) {    
-	char prm_name[20];
-	char prm_name1[20];
-	char prm_name2[20];
-	char prm_name3[20];
-    char prm_name4[20];
-	sscanf(config_line, " %s %s %s %s %s %s\n", prm_name, prm_name1, 
-                prm_name2, prm_name3, prm_name4, val);
+void read_str_from_log(char* config_line, char* file, char* directory_path ) {    
+	char date[20];
+	char user[20];
+	char folder[20];
+	char state[20];
+    char file_type[20];
+	sscanf(config_line, "%s %s %s %s %s %s\n", date, user, directory_path, state, file_type, file);
 }
 
-void get_list_of_files() {
 
-    char **to_be_returned[1000][50];
+void push_modified_files( char* destintation, char* log_path ) {
+
+    //char **to_be_returned[1000][50];
   
     FILE *fp;
     char buf[100];
@@ -170,6 +172,8 @@ void get_list_of_files() {
     char log_file_name[50] = "/root/logs/";
     char log_date[50];    
     char* log_date_buff = str_date_log(log_date);
+    strcat(log_file_name,log_path);
+    strcat(log_file_name,"/");
     strcat(log_file_name,log_date_buff);
     strcat(log_file_name,".log");
 
@@ -178,22 +182,27 @@ void get_list_of_files() {
         //exit(EXIT_FAILURE);
     }
 
-    int i = 0;
+
     while(! feof(fp)) {
 		fgets(buf, 100, fp);
 		
 		if (strstr(buf, "MODIFIED")) {
-			char tester[50];
-			read_str_from_log(buf, tester);
+			char file_name[50];
+            char directory_path[50];
+            char file_directory[100];
+			read_str_from_log(buf, file_name, directory_path);
 
-			//to_be_returned[i] = tester;
-            i++;
+            strcat(file_directory, directory_path);
+            strcat(file_directory, file_name);
+            
+            logInfoMessages( file_directory, destintation );
+            //char* args[] = {"cp","-R", file_directory, destintation, NULL};
+            //execv("/bin/cp",args); 
+            
 		}
 	}
 
     fclose(fp);
-
-    //return to_be_returned;
 }
 
 void write_watch_file( char* directory_name, int watcher ) {
