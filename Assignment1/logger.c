@@ -108,6 +108,8 @@ void write_log_file( char* log_message ) {
 				log_file_name, strerror(errno));
 	}	
 
+    memset(str_message, 300, 0);  
+
     strcat(str_message,time_buff);
     strcat(str_message," ");
     strcat(str_message,getUserName());
