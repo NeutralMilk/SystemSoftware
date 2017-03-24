@@ -68,7 +68,7 @@ char *getUserName()
    // printf("%s\n",p);
 }
 
-void log_data_two( char * log_path, int watch_id, char * message, char * message1) 
+void log_data_two( char * log_path,char * message, char * message1, int watch_id ) 
 {
     char str_message[300];
 

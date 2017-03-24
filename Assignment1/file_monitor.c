@@ -284,7 +284,7 @@ int main(int argc, char *argv[]) {
 			else {
 				syslog (LOG_NOTICE, "file:%s is deleted.", event->name);
 				//printf( "File %s deleted.\n", event->name );
-                log_data_two(watch_log, "DELETED file: ",  event->name ,event->wd );  
+                log_data_two(watch_log, "DELETED file: ",  event->name , event->wd );  
 			}
 			}
 
@@ -311,7 +311,7 @@ int main(int argc, char *argv[]) {
 					else {
 						syslog (LOG_NOTICE, " file:%s closed.", event->name);
 						//printf( "New file %s created.\n", event->name );
-                        log_data_two(watch_log, "CLOSED file: ",  event->name ,event->wd ); 
+                        log_data_two(watch_log, "CLOSED file: ",  event->name , event->wd ); 
 
 					}
 				}
