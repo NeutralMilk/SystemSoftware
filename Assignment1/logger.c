@@ -91,6 +91,12 @@ void write_log_file( char * log_path, char* log_message ) {
     char log_date[50];
     char* log_date_buff = str_date_log(log_date);
     strcat(log_file_name,log_path);
+
+    struct stat st = {0};
+    if (stat(log_file_name, &st) == -1) {
+        mkdir(log_file_name, 0700);
+    }
+
     strcat(log_file_name,"/");
     strcat(log_file_name,log_date_buff);
     strcat(log_file_name,".log");
