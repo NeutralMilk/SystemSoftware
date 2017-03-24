@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
 }
 
 void exec1( int seconds, char* source, char* target ) {
-    sleep(seconds_diff);
+    sleep(seconds);
     logInfoMessage("backup starting");
     backup_folder(source, target );
 
