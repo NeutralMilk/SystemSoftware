@@ -26,8 +26,12 @@ void exec2();
 int pid_f;
 int pipe1[2];
 int pipe2[2];
+int nBytes;
 
 int backup_running;
+int push_live;
+
+char readBuffer[10];
 
 static void skeleton_daemon() {
 	pid_t pid;
@@ -89,21 +93,46 @@ int main(int argc, char *argv[]) {
 
 	int pid;
 	printf("\nProgram Running");
-    backup_running = 0;
+    backup_running = 1;
+    push_live = 1;
+    nBytes = -1;
 
     skeleton_daemon();
 
-    while(1) {
+    while(1) {  
 
-        if ((pid_f = fork()) == -1) {
-            perror("bad fork2");
-        } else if (pid_f == 0) {
-            exec2();
+        nBytes = read(pipe2[0], readBuffer, sizeof(readBuffer));
+
+        if (strcmp(readBuffer,"1") == 0) {
+            push_live = 1;
+        } 
+
+        if (strcmp(readBuffer,"0") == 0) {
+            logInfoMessage("push was not success");
+        } 
+
+        memset(readBuffer, 0, 10);
+
+        if (push_live == 1) {
+            if ((pid_f = fork()) == -1) {
+                logInfoMessage("bad fork for exec2");
+            } else if (pid_f == 0) {
+                exec2();
+            }
+        } 
+
+        nBytes = read(pipe1[0], readBuffer, sizeof(readBuffer));
+
+        if (strcmp(readBuffer,"1") == 0) {
+            backup_running = 1;
         }
+        if (strcmp(readBuffer,"0") == 0) {
+            logInfoMessage("backup was not success");
+        } 
 
         struct config_struct config;
         config = read_config_file();
-        if ((config.backup_on == 1 ) && (backup_running == 0)) {
+        if ((config.backup_on == 1 ) && (backup_running == 1)) {
             logInfoMessages("backup set for ",config.backup_time);
             
             int seconds_diff = getSeconds(config.backup_time);
@@ -112,7 +141,7 @@ int main(int argc, char *argv[]) {
             logInfoMessages("seconds until backup ",str);
 
             if ((pid_f = fork()) == -1) {
-                perror("bad fork1");
+                logInfoMessage("bad fork for exec1");
             } else if (pid_f == 0) {
                 exec1( seconds_diff, config.backup_source,config.backup_target  );
             }
@@ -130,6 +159,10 @@ void exec1( int seconds, char* source, char* target ) {
     //update_folder(config.backup_source, config.live_site);
 
     logInfoMessage("updating and backing completed");
+
+     close(pipe1[0]);
+     write(pipe1[1], "1", strlen("1") );
+
     _exit(1);
 }
 
@@ -138,5 +171,9 @@ void exec2() {
     char live_site[50] = "/root/live/";
 
     push_modified_files(live_site, log_directory);
+
+    close(pipe2[0]);
+    write(pipe2[1], "1", strlen("1") );
+    
     _exit(1);
 }
