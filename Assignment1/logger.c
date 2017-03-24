@@ -229,7 +229,7 @@ void write_watch_file( char* directory_name, int watcher ) {
     sprintf(str, "%d", watcher);
 
     strcat(str_message,directory_name);
-    strcat(str_message, ":");
+    strcat(str_message, " ");
     strcat(str_message,str);
     strcat(str_message,"\n");
 
@@ -249,8 +249,8 @@ void write_watch_file( char* directory_name, int watcher ) {
 }
 
 void read_from_line(char* line, char* val) {    
-    char prm_name[20];
-    sscanf(line, "%s:%s\n",val, prm_name);
+    int prm_name;
+    sscanf(line, "%s %d\n",val, prm_name);
 }
 
 void read_watcher_file(char* directory, int watch_id, char* result ) {
