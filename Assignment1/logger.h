@@ -13,8 +13,8 @@ void logErrorMessages( char* message1, char* message2 );
 void logWarningMessages( char* message1, char* message2 );
 void logInfoMessages( char* message1, char* message2 );
 
-void log_data_two( char* log_path, char * message, char * message1);
-void log_data(char* log_path, char * message);
+void log_data_two( char * log_path, char * message, char * message1);
+void log_data(char * log_path, char * message);
 void write_log_file( char* log_path, char* log_message );
 
 void get_list_of_files();

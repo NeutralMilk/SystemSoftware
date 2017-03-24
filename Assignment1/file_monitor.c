@@ -21,7 +21,7 @@
 #define BUF_LEN     ( MAX_EVENTS * ( EVENT_SIZE + LEN_NAME )) /*buffer to store the data of events*/
 #define EVENT_BUF_LEN  (1024 * (EVENT_SIZE + 16))
 
-void add_watches(int fd, char *root, chat * watch_directory)
+void add_watches(int fd, char *root, char * watch_directory)
 {
   int wd;
   char *abs_dir;
@@ -265,7 +265,7 @@ int main(int argc, char *argv[]) {
 			if ( event->mask & IN_ISDIR ) {
 				//printf( "New directory %s created.\n", event->name );
 				syslog (LOG_NOTICE, "new directory:%s created.", event->name);
-                log_data_two("NEW directory: ",  event->name );  
+                log_data_two(watch_directory, "NEW directory: ",  event->name );  
 			}
 			else {
 				syslog (LOG_NOTICE, "new file:%s created.", event->name);
