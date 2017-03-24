@@ -103,7 +103,7 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
 
     char date[50];
     char* time_buff = string_date_time(date);
-    char str_message[300];
+    char str_message[700];
 
     char directory_path[100];
     memset(directory_path, 0, 300);  
@@ -119,17 +119,17 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
 	//			log_file_name, strerror(errno));
 	//}	
 
-    memset(str_message, 0, 300);  
+    memset(str_message, 0, 700);  
 
     strcat(str_message,time_buff);
     strcat(str_message," ");
     strcat(str_message,getUserName());
-    strcat(str_message," ");
+    strcat(str_message," "); 
 
-    if(watch_id) {
+    //if(watch_id) {
         read_watcher_file(log_message, watch_id, directory_path);
-        strcat(str_message,  directory_path);
-    }
+        strcat(str_message,  "/var/html/");
+    //}
     strcat(str_message,log_message);
     strcat(str_message, "\n");
 
