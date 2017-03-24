@@ -123,8 +123,11 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     strcat(str_message,getUserName());
     strcat(str_message," ");
 
+    char directory_path[100];
+
     if(watch_id != -1) {
-        strcat(str_message, read_watcher_file(log_message,watch_id) );
+        read_watcher_file(log_message,watch_id, directory_path);
+        strcat(str_message,  directory_path);
     }
     strcat(str_message,log_message);
     strcat(str_message, "\n");
@@ -239,11 +242,10 @@ void read_from_line(char* line, char* val) {
     sscanf(line, "%s:%s\n", prm_name, val);
 }
 
-char* read_watcher_file(char* directory, int watch_id ) {
+void read_watcher_file(char* directory, int watch_id, char* result ) {
 
     FILE *fp;
     char buf[100];
-    char directory_path[100];
 
     char watch_file_name[50] = "/root/logs/watcher.txt";
 
@@ -257,10 +259,10 @@ char* read_watcher_file(char* directory, int watch_id ) {
     while(! feof(fp)) {
         fgets(buf, 100, fp);
         if (strstr(buf, str)) {
-           read_from_line(buf, directory_path);
+           read_from_line(buf, result);
         }
     }
 
     fclose(fp);
-    return directory_path;
+    //return result;
 }

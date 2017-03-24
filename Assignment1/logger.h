@@ -22,6 +22,6 @@ void read_str_from_log(char* config_line, char* val);
 char *getUserName();
 
 void read_from_line(char* line, char* val);
-char* read_watcher_file(char* directory, int watch_id );
+void read_watcher_file(char* directory, int watch_id, char* result );
 
 #endif //ASSIGNMENT1_LOGGER_H
