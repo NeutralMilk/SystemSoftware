@@ -54,9 +54,11 @@ void add_watches(int fd, char *root)
       /* if its a directory, add a watch*/
       if (entry->d_type == DT_DIR)
       {
+          if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+              continue;
           strcpy(abs_dir,root);
           strcat(abs_dir,entry->d_name);
-           
+          
           wd = inotify_add_watch(fd, abs_dir, IN_CREATE | IN_MODIFY | IN_DELETE);
            if (wd == -1)
               log_data_two("Could not add watch: ",  abs_dir );
@@ -151,7 +153,7 @@ int main(int argc, char *argv[]) {
 	  perror( "inotify_init" );
 	}
 
-	add_watches(fd,"/root/html/");
+	add_watches(fd,"/root/html");
 
 	if(wd<0){
 	    syslog(LOG_NOTICE, "wd < 0");
