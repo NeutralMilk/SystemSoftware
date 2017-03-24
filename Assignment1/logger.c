@@ -79,7 +79,7 @@ void log_data_two( char * log_path,char * message, char * message1, int watch_id
 }
 
 void log_data( char * log_path, char * message) {
-    write_log_file(log_path, message, -1);
+    write_log_file(log_path, message, 0);
 }
 
 void write_log_file( char * log_path, char* log_message, int watch_id ) {
@@ -92,10 +92,10 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     char* log_date_buff = str_date_log(log_date);
     strcat(log_file_name,log_path);
 
-    struct stat st = {0};
-    if (stat(log_file_name, &st) == -1) {
-        mkdir(log_file_name, 0700);
-    }
+    //struct stat st = {0};
+    //if (stat(log_file_name, &st) == -1) {
+     //   mkdir(log_file_name, 0700);
+    //}
 
     strcat(log_file_name,"/");
     strcat(log_file_name,log_date_buff);
