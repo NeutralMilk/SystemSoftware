@@ -90,7 +90,7 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     char log_file_name[150] = "/root/logs/";
     char log_date[50];
     char* log_date_buff = str_date_log(log_date);
-    strcat(log_file_name,log_path);
+    strcat(log_file_name,"logFolder");
 
     //struct stat st = {0};
     //if (stat(log_file_name, &st) == -1) {
@@ -122,9 +122,9 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     memset(str_message, 0, 700);  
 
     strcat(str_message,time_buff);
-    strcat(str_message," ");
+    strcat(str_message, " ");
     strcat(str_message,getUserName());
-    strcat(str_message," "); 
+    strcat(str_message, " "); 
 
     //if(watch_id) {
     //    read_watcher_file(log_message, watch_id, directory_path);
