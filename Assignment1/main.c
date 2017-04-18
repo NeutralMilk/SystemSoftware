@@ -93,42 +93,44 @@ int main(int argc, char *argv[]) {
 
     while(1) {  
 
-        memset(readBuffer, 0, 10);
+        // memset(readBuffer, 0, 10);
 
-        close(pipe1[1]);
-        close(pipe2[1]);
+        // close(pipe1[1]);
+        // close(pipe2[1]);
 
-        nBytes = read(pipe2[0], readBuffer, sizeof(readBuffer));
+        // nBytes = read(pipe2[0], readBuffer, sizeof(readBuffer));
 
-        if (strcmp(readBuffer,"1") == 0) {
-            logInfoMessage("push_live set to 1");
-            push_live = 1;
-        } 
+        // if (strcmp(readBuffer,"1") == 0) {
+        //     logInfoMessage("push set to 1");
+        //     push_live = 1;
+        // } 
 
-        if (strcmp(readBuffer,"0") == 0) {
-            logInfoMessage("push was not success");
-        } 
+        // if (strcmp(readBuffer,"0") == 0) {
+        //     logInfoMessage("push was not success");
+        // } 
 
-        memset(readBuffer, 0, 10);
+        //memset(readBuffer, 0, 10);
 
-        if (push_live == 1) {
-            if ((pid_f = fork()) == -1) {
-                logInfoMessage("bad fork for exec2");
-            } else if (pid_f == 0) {
-                push_live = 0;
-                exec2();
-            }
-        } 
+        // if (push_live == 1) {
+        //     if ((pid_f = fork()) == -1) {
+        //         logInfoMessage("bad fork for exec2");
+        //     } else if (pid_f == 0) {
+        //         push_live = 0;
+        //         exec2();
+        //     }
+        // } 
 
-        nBytes = read(pipe1[0], readBuffer, sizeof(readBuffer));
+        exec2();
 
-        if (strcmp(readBuffer,"1") == 0) {
-            logInfoMessage("backup_running set to 1");
-            backup_running = 1;
-        }
-        if (strcmp(readBuffer,"0") == 0) {
-            logInfoMessage("backup was not success");
-        } 
+        // nBytes = read(pipe1[0], readBuffer, sizeof(readBuffer));
+
+        // if (strcmp(readBuffer,"1") == 0) {
+        //     logInfoMessage("backup_running set to 1");
+        //     backup_running = 1;
+        // }
+        // if (strcmp(readBuffer,"0") == 0) {
+        //     logInfoMessage("backup was not success");
+        // } 
 
         struct config_struct config;
         config = read_config_file();
@@ -144,13 +146,15 @@ int main(int argc, char *argv[]) {
             char str[10];
             sprintf(str, "%d", seconds_diff);
             logInfoMessages("seconds until backup ",str);
+            exec1( seconds_diff, config.backup_source,config.backup_target  );
+            
 
-            if ((pid_f = fork()) == -1) {
-                logInfoMessage("bad fork for exec1");
-            } else if (pid_f == 0) {
-                backup_running = 0;
-                exec1( seconds_diff, config.backup_source,config.backup_target  );
-            }
+            // if ((pid_f = fork()) == -1) {
+            //     logInfoMessage("bad fork for exec1");
+            // } else if (pid_f == 0) {
+            //     backup_running = 0;
+            //     exec1( seconds_diff, config.backup_source,config.backup_target  );
+            // }
         }
         sleep(30);
 	}
@@ -173,8 +177,8 @@ void exec1( int seconds, char* source, char* target ) {
 
     logInfoMessage("updating and backing completed");
 
-     close(pipe1[0]);
-     write(pipe1[1], "1", strlen("1") );
+    //  close(pipe1[0]);
+    //  write(pipe1[1], "1", strlen("1") );
 
     _exit(1);
 }
@@ -185,8 +189,8 @@ void exec2() {
 
     push_modified_files(live_site, log_directory);
 
-    close(pipe2[0]);
-    write(pipe2[1], "1", strlen("1") );
+    // close(pipe2[0]);
+    // write(pipe2[1], "1", strlen("1") );
     
     _exit(1);
 }
