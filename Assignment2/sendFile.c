@@ -4,52 +4,66 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include<sys/socket.h>    //socket
+#include<arpa/inet.h> //inet_addr
 #include <string.h>
+#include <stdio.h>
 
 #include "sendFile.h"
 
 ///Users/timothybarnard/Documents/SystemSoftware/Assignment2/ClientFiles
-
-void send_file( char * sourceFile , int socketID ) {
-
-    char file_buffer[512]; 
-    printf("[Client] Sending %s to the Server... ", sourceFile);
+char* send_file( char * sourceFile, char * file_buffer ) {
     
-    FILE *file_open = fopen(sourceFile, "r");
-    bzero(file_buffer, 512); 
-    int block_size, i=0; 
-    
-    while((block_size = fread(file_buffer, sizeof(char), 512, file_open)) > 0) {
-        printf("Data Sent %d = %d\n",i,block_size);
-        if(send(socketID, file_buffer, block_size, 0) < 0) {
-            exit(1);
-        }
-        bzero(file_buffer, 512);
-        i++;
+    char* file_name = "/Users/timothybarnard/Documents/SystemSoftware/Assignment2/ClientFiles/";
+    char file_path[512];
+    memset(file_buffer, 0, 512);
+
+    strcat(file_path,file_name);
+    strcat(file_path,sourceFile);
+
+    printf("[Client] Sending %s to the Server... ", file_path);
+
+    FILE *fp;    
+    char buf[100];
+
+    if ((fp=fopen(file_path, "r")) == NULL) {
+        return "Error";
     }
+    
+    while(! feof(fp)) {
+        fgets(buf, 100, fp);
+        strcat(file_buffer, buf);
+        continue;
+    }
+
+    printf("The file contains this text\n\n%s", file_buffer);
+
+    return file_buffer;
 }
 
 ///Users/timothybarnard/Documents/SystemSoftware/Assignment2/ServerFiles
-void receive_file( char * targetFile, int socketID ) {
+int receive_file( char * targetFile, char*file_buffer ) {
 
-    char file_buffer[512]; // Receiver buffer
-    //char* file_name = "/home/jmccarthy/Documents/Apps/week9/socketExample/serverFiles/list.txt";
+    int result;
+    char* file_name = "/Users/timothybarnard/Documents/SystemSoftware/Assignment2/ServerFiles/";
+    char file_path[512];
+    memset(file_path, 0, 512);
     
-    FILE *file_open = fopen(targetFile, "w");
-    if(file_open == NULL)
-        printf("File %s Cannot be opened file on server.\n", targetFile);
-    else {
-        bzero(file_buffer, 512); 
-        int block_size = 0;
-        int i=0;
-        while((block_size = recv(socketID, file_buffer, 512, 0)) > 0) {
-            printf("Data Received %d = %d\n",i,block_size);
-            int write_sz = fwrite(file_buffer, sizeof(char), block_size, file_open);
-            bzero(file_buffer, 512);
-            i++;
-        }
-        
+    result = 1;
+
+    strcat(file_path,file_name);
+    strcat(file_path,targetFile);
+    
+    FILE *file_open = fopen(file_path, "ab+");
+    if(file_open == NULL) {
+        printf("File %s Cannot be opened file on server.\n", file_path);
+        result = 0;
+    
+    } else {
+        fwrite(file_buffer , 1 , sizeof(file_buffer) , file_open );
+        result = 1;
     }
     printf("Transfer Complete!\n");
     fclose(file_open);
+    return result;
 }

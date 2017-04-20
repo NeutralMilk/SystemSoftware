@@ -23,7 +23,7 @@ void read_str_from_config_line(char* config_line, char* val) {
     sscanf(config_line, "%s %s\n", prm_name, val);
 }
 
-
+    
 struct config_struct read_config_file() {
 
     struct config_struct config;

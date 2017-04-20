@@ -4,7 +4,7 @@
 #ifndef ASSIGNMENT2_SENDFILE_H
 #define ASSIGNMENT2_SENDFILE_H
 
-void send_file( char * sourceFile);
-void receive_file( char * targetFile );
+char* send_file( char * sourceFile, char * file_buffer );
+int receive_file( char * targetFile, char*file_buffer );
 
 #endif //ASSIGNMENT2_SENDFILE_H

@@ -10,6 +10,8 @@
 #include<unistd.h>    //write
 #include<pthread.h> //for threading , link with lpthread
 #include<strings.h>
+
+#include "sendFile.h"
  
 //the thread function
 void *connection_handler(void *);
@@ -77,8 +79,6 @@ int main(int argc , char *argv[])
 		{
 			break;
 		}
-		//printf("%s",buffer);
-		//printf("pass %s",pass);
 
 		//authenticate user
 		if(strstr(username, "admin") != NULL && strstr(pass, "pass") != NULL) {
@@ -97,7 +97,7 @@ int main(int argc , char *argv[])
             }
             
                 //Now join the thread , so that we dont terminate before the thread
-                //pthread_join( sniffer_thread , NULL);
+            //pthread_join( sniffer_thread , NULL);
             puts("Handler assigned");
         
             if (client_sock < 0)
@@ -127,15 +127,30 @@ void *connection_handler(void *socket_desc)
     int sock = *(int*)socket_desc;
     int read_size;
     char *message , client_message[2000];
+    char type[50];
+	char file_message[2000];
+    char directory_name[2000];
      
-    //Send some messages to the client
     message = "Greetings! I am your connection handler\n";
     write(sock , message , strlen(message));
      
-    //Receive a message from client
     while( (read_size = recv(sock , client_message , 2000 , 0)) > 0 )
     {
+        sscanf(client_message, "type: %s message: %s\r\n\r\n", type, file_message);
+
         write(sock , client_message , strlen(client_message));
+
+        if(strcmp(type, "directory" ) ==0 ) {
+            printf("%s - ", type);
+            printf("%s\n",file_message);
+            strcat(directory_name,file_message);
+        } else {
+            printf("%s", type);
+             if ( receive_file( directory_name, client_message ) == 1) {
+                printf("File sent\n");
+                write(sock , "File Sent" , strlen("File Sent"));
+            }
+        }
     }
      
     if(read_size == 0)
