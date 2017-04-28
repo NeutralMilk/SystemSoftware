@@ -9,12 +9,39 @@
 
 #include "sendFile.h"
 
+char* serverDirectory( char* index ) {
+    if(strcmp(index, "1") == 0) {
+        return "/Users/timothybarnard/Documents/SystemSoftware/Assignment2/ServerFiles/";
+    }
+    if(strcmp(index, "2") == 0) {
+        return "/Users/timothybarnard/Documents/SystemSoftware/Assignment2/ServerFiles/Sales/";
+    }
+    if(strcmp(index, "3") == 0) {
+        return "/Users/timothybarnard/Documents/SystemSoftware/Assignment2/ServerFiles/Promotions/";
+    }
+    if(strcmp(index, "4") == 0) {
+        return "/Users/timothybarnard/Documents/SystemSoftware/Assignment2/ServerFiles/Marketing/";
+    }
+    if(strcmp(index, "5") == 0) {
+        return "/Users/timothybarnard/Documents/SystemSoftware/Assignment2/ServerFiles/Offers/";
+    }
+    return "/Users/timothybarnard/Documents/SystemSoftware/Assignment2/ServerFiles/";
+}
+
 int main(int argc , char *argv[])
 {
     int sock, n;
     struct sockaddr_in server;
+    char directory[512];
+    char file_name[512];
+    char serverFile[1000];
     char message[1000] , server_reply[2000];
     char sendbuff[1000], recvbuff[1000], buffer[1000];
+
+    char username[50];
+    strcat(username, argv[1]);
+    char password[50];
+    strcat(password, argv[2]);
     
     if (argc != 3) {
         perror("usage: ./authenclient <Username> <Password>");
@@ -40,7 +67,7 @@ int main(int argc , char *argv[])
         return 1;
     }
 
-    snprintf(sendbuff, sizeof(sendbuff), "username: %s password: %s\r\n\r\n", argv[1], argv[2]);
+    snprintf(sendbuff, sizeof(sendbuff), "username: %s password: %s\r\n\r\n", username, password);
     
     send(sock, sendbuff, strlen(sendbuff), 0); //write contents of sendbuff to socket
 
@@ -66,9 +93,25 @@ int main(int argc , char *argv[])
      
     //keep communicating with server
     while(1) {
- 
-        printf("\nWhat directory? ");
-        scanf("%s" , message);
+
+        puts("1: Root");
+        puts("2: Sales");
+        puts("3: Promotions");
+        puts("4: Marketing");
+        puts("5: Offers\n\n");
+
+        scanf("%s" , directory);
+
+        char *file_path = serverDirectory(directory);
+        
+        strcat(message, file_path);
+
+        printf("\nWhat file name? ");
+        scanf("%s" , file_name);
+
+        strcat(message, file_name);
+
+        strcat(serverFile,message);
          
         snprintf(buffer, sizeof(buffer), "type: directory message: %s\r\n\r\n", message);
 
@@ -88,18 +131,15 @@ int main(int argc , char *argv[])
         puts(server_reply);
         bzero(buffer, 1000); 
         bzero(server_reply, 2000);
-        bzero(message, 1000);  
+        bzero(message, 1000);
 
         printf("\nWhat file? ");
         scanf("%s" , message); 
 
         char file[512];
         char* file_contents = send_file( message, file );
-
-        snprintf(buffer, sizeof(buffer), "type: file message: %s\r\n\r\n",file_contents);
-
         //Send some data
-        if( send(sock , buffer , strlen(buffer) , 0) < 0) {
+        if( send(sock , file_contents , strlen(file_contents) , 0) < 0) {
             puts("Send failed");
             return 1;
         }
@@ -113,15 +153,7 @@ int main(int argc , char *argv[])
         puts("Server reply :");
         puts(server_reply);
 
-        bzero(server_reply, 2000); 
-        //Receive a reply from the server
-        if( recv(sock , server_reply , 2000 , 0) < 0) {
-            puts("recv failed");
-            break;
-        }
-         
-        puts("Server reply :");
-        puts(server_reply);
+        log_file(serverFile, username);
     }
      
     //close(sock);

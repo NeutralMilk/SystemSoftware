@@ -12,7 +12,9 @@
 #include<strings.h>
 
 #include "sendFile.h"
- 
+
+pthread_mutex_t lock_x;
+
 //the thread function
 void *connection_handler(void *);
  
@@ -126,31 +128,43 @@ void *connection_handler(void *socket_desc)
     //Get the socket descriptor
     int sock = *(int*)socket_desc;
     int read_size;
-    char *message , client_message[2000];
+    char client_message[2000];
     char type[50];
 	char file_message[2000];
     char directory_name[2000];
      
-    message = "Greetings! I am your connection handler\n";
-    write(sock , message , strlen(message));
+    memset(client_message, 0, 2000);
      
     while( (read_size = recv(sock , client_message , 2000 , 0)) > 0 )
-    {
-        sscanf(client_message, "type: %s message: %s\r\n\r\n", type, file_message);
+    {   
+        memset(type, 0, 50);
+        memset(file_message, 0, 2000);
 
-        write(sock , client_message , strlen(client_message));
+        sscanf(client_message, "type: %s message: %s\r\n\r\n", type, file_message);
+        printf("Client message %s: \n", client_message);
 
         if(strcmp(type, "directory" ) ==0 ) {
+
             printf("%s - ", type);
             printf("%s\n",file_message);
             strcat(directory_name,file_message);
+            write(sock , "File path recieved" , strlen("File path recieved"));
+
         } else {
-            printf("%s", type);
+
+            pthread_mutex_lock(&lock_x);
+
+            printf("%s - ", type);
              if ( receive_file( directory_name, client_message ) == 1) {
-                printf("File sent\n");
+                printf("\nFile sent: %s\n", client_message);
                 write(sock , "File Sent" , strlen("File Sent"));
+                memset(directory_name, 0, 2000);
             }
+
+            pthread_mutex_unlock(&lock_x);
         }
+
+        memset(client_message, 0, 2000);
     }
      
     if(read_size == 0)
