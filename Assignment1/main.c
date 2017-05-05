@@ -137,6 +137,7 @@ int main(int argc, char *argv[]) {
         printf("\nReading file");
 
         if(config.backup_now ==1 ) {
+            printf("Doing backup\n");
              exec3( config.backup_source,config.backup_target  );
         }
 
