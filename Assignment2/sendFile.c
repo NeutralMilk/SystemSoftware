@@ -90,3 +90,35 @@ void log_file( char * file_path, char * username ) {
     printf("Logged!\n");
     fclose(file_open);
 }
+
+int authenticate_file(char* username, char* password) {
+
+    int result = 0;
+    FILE *fp;
+    char buf[100];
+    char password_filename[255] = "password.txt";
+
+    char file_username[100];
+    char file_password[100];
+
+    if ((fp=fopen(password_filename, "r")) == NULL) {
+       printf("File %s Cannot be opened file on server.\n", password_filename);
+    }
+    
+    while(! feof(fp)) {
+        fgets(buf, 100, fp);
+
+        printf("buff %s", buf);
+        
+        sscanf(buf, "%s %s\n", file_username, file_password);
+
+        printf("Username file: %s - %s\n", username, file_username);
+        printf("Password file: %s - %s\n", password, file_password);
+
+        if(strcmp(username, file_username) == 0 && strcmp(password, file_password) == 0) {
+            result = 1;
+        }
+    }
+
+    return result;
+}

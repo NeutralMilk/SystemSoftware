@@ -86,10 +86,10 @@ int main(int argc, char *argv[]) {
     push_live = 1;
     nBytes = -1;
 
-    pipe(pipe1);
-    pipe(pipe2);
+    //pipe(pipe1);
+    //pipe(pipe2);
 
-    skeleton_daemon();
+    //skeleton_daemon();
 
     while(1) {  
 

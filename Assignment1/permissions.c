@@ -14,7 +14,7 @@ int lockAllFiles(char* path) {
     mode_t mode;
 	stat(path, &st);
 
-	mode = st.st_mode & 33188;
+	mode = st.st_mode & 11111;
 	mode &= ~(S_IRUSR); 
 	mode |= S_IXUSR;  
 

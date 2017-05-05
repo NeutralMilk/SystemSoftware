@@ -39,8 +39,14 @@ int main(int argc , char *argv[])
     char sendbuff[1000], recvbuff[1000], buffer[1000];
 
     char username[50];
-    strcat(username, argv[1]);
     char password[50];
+
+    memset(username, 0, 50);
+    memset(password, 0, 50);
+    strcpy(username, "");
+    strcpy(password, "");
+
+    strcat(username, argv[1]);
     strcat(password, argv[2]);
     
     if (argc != 3) {
@@ -84,6 +90,10 @@ int main(int argc , char *argv[])
 			break;
 	}
 	
+    if(strcmp(recvbuff,"DENIED") == 0) {
+        return 1;
+    }
+
 	if (n < 0) {
         perror("read error");
          return 1;

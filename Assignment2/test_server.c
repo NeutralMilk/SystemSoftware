@@ -56,14 +56,13 @@ int main(int argc , char *argv[])
     puts("Waiting for incoming connections...");
     c = sizeof(struct sockaddr_in);
      
-     
     //Accept and incoming connection
     puts("Waiting for incoming connections...");
     c = sizeof(struct sockaddr_in);
     while( (client_sock = accept(socket_desc, (struct sockaddr *)&client, (socklen_t*)&c)) )
     {
         puts("Connection accepted");
-        
+
         while( (n = recv(client_sock, buffer, 1000, 0)) > 0)
 		{
 			//exception has occured
@@ -73,7 +72,16 @@ int main(int argc , char *argv[])
 			}
 			if(strstr(buffer, "\r\n\r\n") != NULL)
 			{
+                memset(username, 0, 50);
+                memset(pass, 0, 50);
+                strcpy(username, "");
+                strcpy(pass, "");
+
 				sscanf(buffer, "username: %s password: %s\r\n\r\n", username, pass);
+
+                printf("Username %s\n", username);
+                printf("Password %s \n", pass);
+
 				break;
 			}
 		}
@@ -83,7 +91,7 @@ int main(int argc , char *argv[])
 		}
 
 		//authenticate user
-		if(strstr(username, "admin") != NULL && strstr(pass, "pass") != NULL) {
+		if ( authenticate_file(username, pass) == 1 ) {
 			
             puts("ACCESSED");
 			write(client_sock, writeBuffer, strlen(writeBuffer));

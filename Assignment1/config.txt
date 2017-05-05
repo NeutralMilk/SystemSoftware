@@ -5,7 +5,7 @@ TBPL 255
 BACKUP 1
 
 #backup time
-BKUP_TIME 20:10:00
+BKUP_TIME 13:04:00
 
 #source directory
 SOURCE /Users/timothybarnard/Documents/SystemSoftware/Assignment1/html
@@ -17,4 +17,4 @@ TARGET /Users/timothybarnard/Documents/SystemSoftware/Assignment1/folder/
 LIVE /Users/timothybarnard/Documents/SystemSoftware/Assignment1/folder/www
 
 #backup enabled
-DO_BACKUP_NOW 0
+DO_BACKUP_NOW 1
