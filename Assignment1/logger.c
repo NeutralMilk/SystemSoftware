@@ -29,6 +29,13 @@ void logInfoMessages( char* message1, char* message2 )
    closelog();
 }
 
+void logInfoMessageInt( char* message1, int message2 )
+{
+   openlog("dt228Yr4",LOG_PID|LOG_CONS, LOG_USER);
+   syslog(LOG_INFO, "%s: %d", message1, message2);
+   closelog();
+}
+
 void logWarningMessage( char* message )
 {
    openlog("dt228Yr4",LOG_PID|LOG_CONS, LOG_USER);
