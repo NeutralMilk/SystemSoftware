@@ -117,9 +117,9 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     char directory_path[300];
     memset(directory_path, 0, 300);  
 
-	log_file = fopen(log_file_name, "ab+");
+	log_file = fopen(log_file_name, "a+");
 
-    memset(str_message, 0, 700);  
+    memset(str_message, 0, 700); 
 
     strcat(str_message,time_buff);
     strcat(str_message, " ");
