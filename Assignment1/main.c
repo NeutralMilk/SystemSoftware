@@ -134,6 +134,7 @@ int main(int argc, char *argv[]) {
 
         struct config_struct config;
         config = read_config_file();
+        printf("\nReading file");
 
         if(config.backup_now ==1 ) {
              exec3( config.backup_source,config.backup_target  );
@@ -156,7 +157,7 @@ int main(int argc, char *argv[]) {
             //     exec1( seconds_diff, config.backup_source,config.backup_target  );
             // }
         }
-        sleep(30);
+        sleep(1);
 	}
 }
 
