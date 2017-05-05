@@ -134,7 +134,6 @@ int main(int argc, char *argv[]) {
 
         struct config_struct config;
         config = read_config_file();
-        printf("\nReading file");
 
         if(config.backup_now ==1 ) {
             printf("Doing backup\n");

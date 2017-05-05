@@ -31,7 +31,6 @@ struct config_struct read_config_file() {
     FILE *fp;
     char buf[100];
     char config_filename[255] = "/root/config.txt"; 
-    printf("Reading file");
 
     if ((fp=fopen(config_filename, "r")) == NULL) {
         logErrorMessages("Failed to open config file", config_filename);
@@ -72,7 +71,6 @@ struct config_struct read_config_file() {
     }
     char str[10];
     sprintf(str, "%d", config.backup_on);
-    printf("finished reading file");
     logInfoMessages("BACKUP " ,str);
     logInfoMessages("BKUP_TIME ",  config.backup_time);
     logInfoMessages("SOURCE ",  config.backup_source);
@@ -81,6 +79,7 @@ struct config_struct read_config_file() {
     logInfoMessageInt("DO_BACKUP_NOW ",  config.backup_now);
 
     printf("DO_BACKUP_NOW %d", config.backup_now);
+    printf("BACKUP %d", config.backup_on);
 
     fclose(fp);
 
