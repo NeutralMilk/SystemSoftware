@@ -120,7 +120,7 @@ int main(int argc, char *argv[]) {
         //     }
         // } 
 
-        //exec2();
+        exec2();
 
         // nBytes = read(pipe1[0], readBuffer, sizeof(readBuffer));
 
