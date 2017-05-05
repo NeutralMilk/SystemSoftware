@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
     //pipe(pipe1);
     //pipe(pipe2);
 
-    //skeleton_daemon();
+    skeleton_daemon();
 
     while(1) {  
 
@@ -136,7 +136,6 @@ int main(int argc, char *argv[]) {
         config = read_config_file();
 
         if(config.backup_now ==1 ) {
-            printf("Doing backup\n");
              exec3( config.backup_source,config.backup_target  );
         }
 
@@ -157,7 +156,7 @@ int main(int argc, char *argv[]) {
             //     exec1( seconds_diff, config.backup_source,config.backup_target  );
             // }
         }
-        sleep(1);
+        sleep(30);
 	}
 }
 

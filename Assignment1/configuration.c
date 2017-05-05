@@ -78,8 +78,8 @@ struct config_struct read_config_file() {
     logInfoMessages("LIVE SITE ",  config.live_site);
     logInfoMessageInt("DO_BACKUP_NOW ",  config.backup_now);
 
-    printf("DO_BACKUP_NOW %d", config.backup_now);
-    printf("BACKUP %d", config.backup_on);
+    //printf("DO_BACKUP_NOW %d", config.backup_now);
+    //printf("BACKUP %d", config.backup_on);
 
     fclose(fp);
 
