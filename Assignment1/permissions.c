@@ -23,7 +23,7 @@ int lockAllFiles(char* path) {
     logInfoMessages("locking folder", path);
 
     int value = 0;
-	char mode[] = "1111";
+	char mode[] = "11111";
 	int i;
 	i = strtol(mode, 0, 8);
 	if ( chmod(path, i) < 0)
