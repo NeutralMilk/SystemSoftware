@@ -21,7 +21,7 @@ void backup_folder( char * sourceFile, char * targetFile )
 
     char* args[] = {"cp","-R", sourceFile, targetFile, NULL};
     execv("/bin/cp",args); 
-    logInfoMessage("backup completed");
+    //logInfoMessage("backup completed");
     
     unlockAllFiles(sourceFile);
 }
