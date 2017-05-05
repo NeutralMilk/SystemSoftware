@@ -110,7 +110,7 @@ void write_log_file( char * log_path, char* log_message, int watch_id ) {
     char directory_path[300];
     memset(directory_path, 0, 300);  
 
-	log_file = fopen(log_file_name, "a+");
+	log_file = fopen(log_file_name, "ab+");
 
     memset(str_message, 0, 700);  
 

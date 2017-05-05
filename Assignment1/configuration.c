@@ -77,6 +77,7 @@ struct config_struct read_config_file() {
     logInfoMessages("SOURCE ",  config.backup_source);
     logInfoMessages("TARGET ",  config.backup_target);
     logInfoMessages("LIVE SITE ",  config.live_site);
+    logInfoMessages("DO_BACKUP_NOW ",  config.backup_now);
 
     fclose(fp);
 
